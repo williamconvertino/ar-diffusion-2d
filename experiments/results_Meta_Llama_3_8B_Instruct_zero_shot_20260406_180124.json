@@ -1,0 +1,31 @@
+{
+  "timestamp": "20260406_180124",
+  "experiment": {
+    "model": "Meta-Llama-3-8B-Instruct",
+    "inference_mode": "InferenceMode.ZERO_SHOT",
+    "problem_set": "NineGrid",
+    "n_problems": 1,
+    "difficulty_filter": {
+      "missing_cells": [
+        30,
+        45
+      ],
+      "initial_resolution_rate": [
+        0.0,
+        0.5
+      ]
+    },
+    "n_few_shot": 0,
+    "max_new_tokens": 512,
+    "notes": "baseline run"
+  },
+  "aggregate_metrics": {
+    "exact_match_rate": 0.0,
+    "mean_cell_accuracy": 0.5802469135802469,
+    "mean_row_accuracy": 0.1111111111111111,
+    "mean_col_accuracy": 0.0,
+    "format_validity_rate": 1.0,
+    "mean_inference_time_s": 28.25814650580287,
+    "mean_perplexity": 1.6475610157250236
+  }
+}

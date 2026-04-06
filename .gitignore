@@ -2,6 +2,10 @@
 results/
 logs/
 
+baseline_eval/Evaluator.py
+baseline_eval/Models.py
+baseline_eval/NineGrid.py
+
 # Environment
 env.sh
 
