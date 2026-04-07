@@ -6,12 +6,13 @@
 
 # ---- Dataset ----------------------------------------------------------------
 PARQUET="/data/evan/NineGrid/ninegrid.parquet"   # path to the .parquet file
-N_SAMPLES=2                                     # how many puzzles to evaluate
+N_SAMPLES=5                                     # how many puzzles to evaluate
 DIFFICULTY="medium"                               # easy | medium | hard | all
 
 # ---- Model ------------------------------------------------------------------
-MODEL="meta-llama/Meta-Llama-3-8B-Instruct"      # HuggingFace model name
-DEVICE="auto"                                     # auto | cuda:0 | cuda:1 | cpu
+MODEL="GSAI-ML/LLaDA-8B-Instruct"      # HuggingFace model name
+BACKEND="llada"         # auto | llama | llada  (auto detects from model name)
+DEVICE="auto"          # auto | cuda:0 | cuda:1 | cpu
 
 # ---- Inference --------------------------------------------------------------
 MODE="zero_shot"           # zero_shot | few_shot
@@ -21,7 +22,7 @@ PERPLEXITY=false           # true | false  (adds perplexity computation, LLaMA o
 
 # ---- Output -----------------------------------------------------------------
 OUTPUT_DIR="experiments"       # directory where JSON result files are saved
-NOTES="baseline run"       # free-text notes stored in the result JSON
+NOTES="test llada run"       # free-text notes stored in the result JSON
 
 # =============================================================================
 #  Don't edit below this line
@@ -56,6 +57,7 @@ python -m "eval_pkg.run_eval" \
     --n-samples      "$N_SAMPLES"      \
     --difficulty     "$DIFFICULTY"     \
     --model          "$MODEL"          \
+    --backend        "$BACKEND"        \
     --device         "$DEVICE"         \
     --mode           "$MODE"           \
     --n-few-shot     "$N_FEW_SHOT"     \

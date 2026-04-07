@@ -47,6 +47,8 @@ def parse_args() -> argparse.Namespace:
                    help="HuggingFace model name, e.g. meta-llama/Meta-Llama-3-8B-Instruct")
     p.add_argument("--device",      default="auto",
                    help="Device for model loading: auto | cuda:0 | cpu (default: auto)")
+    p.add_argument("--backend",     choices=["auto", "llama", "llada"], default="auto",
+                   help="Force a specific backend: auto | llama | llada (default: auto)")
 
     # --- inference ---
     p.add_argument("--mode",        choices=["zero_shot", "few_shot"], default="zero_shot",
@@ -106,8 +108,15 @@ def main() -> None:
     dataset.info()
 
     # ---- 2. load model once ------------------------------------------------
-    print(f"\nLoading model: {args.model}")
-    backend = LlamaBackend(args.model, device=args.device)
+    print(f"\nLoading model: {args.model} (backend: {args.backend})")
+    from eval_pkg.models import LladaBackend
+    if args.backend == "llada":
+        backend = LladaBackend(args.model, device=args.device)
+    elif args.backend == "llama":
+        backend = LlamaBackend(args.model, device=args.device)
+    else:
+        from eval_pkg.models import build_backend
+        backend = build_backend(args.model, device=args.device)
 
     # ---- 3. evaluate -------------------------------------------------------
     evaluator = GridEvaluator(
