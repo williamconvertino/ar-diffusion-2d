@@ -964,7 +964,7 @@ if __name__ == "__main__":
     # 1. Load the dataset
     dataset = NineGrid(
         parquet_path="/data/evan/NineGrid/ninegrid.parquet",
-        n_samples=5,                      # start small for a smoke-test
+        n_samples=500,                      # start small for a smoke-test
         difficulty=diff,
         few_shot_strategy="easiest",        # use simplest puzzles as demos
     )
@@ -1010,11 +1010,11 @@ if __name__ == "__main__":
     # print(metrics_fs.summary())
 
     # 4. Inspect failures
-    failures = [r for r in metrics.per_problem if not r.exact_match]
-    print(f"\n{len(failures)} failures out of {len(dataset)}")
+    # failures = [r for r in metrics.per_problem if not r.exact_match]
+    # print(f"\n{len(failures)} failures out of {len(dataset)}")
 
-    for r in failures[:3]:
-        print(f"\n--- {r.problem_id} ---")
-        print(f"  format_valid : {r.format_valid}")
-        print(f"  cell_accuracy: {r.cell_accuracy:.2f}")
-        print(f"  raw_output   : {r.raw_output[:200]!r}")
+    # for r in failures[:3]:
+    #     print(f"\n--- {r.problem_id} ---")
+    #     print(f"  format_valid : {r.format_valid}")
+    #     print(f"  cell_accuracy: {r.cell_accuracy:.2f}")
+    #     print(f"  raw_output   : {r.raw_output[:200]!r}")
