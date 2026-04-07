@@ -12,7 +12,13 @@
 #SBATCH --output=../../logs/%x-%j.out
 #SBATCH --error=../../logs/%x-%j.err
 
-source /work/wac20/miniconda3/bin/activate
+source /work/wac20/miniconda3/bin/activate diffusion2d
+
+if [ -f .env ]; then
+    set -a
+    source .env
+    set +a
+fi
 
 cd ../../baseline_eval
 
