@@ -964,7 +964,7 @@ if __name__ == "__main__":
     # 1. Load the dataset
     dataset = NineGrid(
         parquet_path="/data/evan/NineGrid/ninegrid.parquet",
-        n_samples=500,                      # start small for a smoke-test
+        n_samples=2,                      # start small for a smoke-test
         difficulty=diff,
         few_shot_strategy="easiest",        # use simplest puzzles as demos
     )

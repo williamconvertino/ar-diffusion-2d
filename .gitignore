@@ -5,6 +5,7 @@ logs/
 baseline_eval/Evaluator.py
 baseline_eval/Models.py
 baseline_eval/NineGrid.py
+baseline_eval/Evaluatorall.py
 
 # Environment
 env.sh
