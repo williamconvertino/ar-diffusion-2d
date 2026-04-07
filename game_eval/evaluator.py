@@ -197,7 +197,10 @@ def default_target_parser(target_text: str, metadata: Dict[str, Any]) -> Any:
     return normalize_text(target_text)
 
 
-def default_board_accuracy_fn(parsed_pred: Any, metadata: Dict[str, Any]) -> Optional[float]:
+def default_board_accuracy_fn(
+                                parsed_pred: Any, 
+                                metadata: Dict[str, Any]
+                            ) -> Optional[float]:
     """
     Default board accuracy:
     - if metadata contains `board_target` and parsed_pred is same type/shape-ish, compare elementwise
