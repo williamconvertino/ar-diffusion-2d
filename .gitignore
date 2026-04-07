@@ -1,6 +1,7 @@
 # Datasets, Logs, and Checkpoints
 results/
 logs/
+data/*
 
 baseline_eval/Evaluator.py
 baseline_eval/Models.py
