@@ -17,7 +17,7 @@ from typing import Any, Optional, Protocol, runtime_checkable
 
 import numpy as np
 
-from Evaluatorall import DifficultyFilter, NineGrid, LlamaBackend, LladaBackend, GridEvaluator, InferenceMode
+from Evaluatorall import DifficultyFilter, NineGrid, LlamaBackend, LladaBackend, GridEvaluator, InferenceMode, save_results
 
 class FourGrid(NineGrid):
 
@@ -39,15 +39,15 @@ if __name__ == "__main__":
 
     #define the difficulty filter
     diff = DifficultyFilter(
-        missing_cells=(6, 8),
+        missing_cells=(6, 12),
         # initial_resolution_rate=(0.0, 0.5),
         )
 
     data_path = Path(__file__).resolve() / '../../data' / 'four_grid.csv'
     # 1. Load the dataset
-    dataset = NineGrid(
+    dataset = FourGrid(
         parquet_path=str(data_path.resolve()),
-        n_samples=5,                      # start small for a smoke-test
+        n_samples=864,                      # start small for a smoke-test
         difficulty=diff,
         few_shot_strategy="easiest",        # use simplest puzzles as demos
     )
@@ -57,8 +57,8 @@ if __name__ == "__main__":
     evaluator = GridEvaluator(
         problem_set=dataset,
         inference_mode=InferenceMode.ZERO_SHOT,
-        # model="meta-llama/Meta-Llama-3-8B-Instruct",
-        model = "google/byt5-small",
+        model="meta-llama/Meta-Llama-3-8B-Instruct",
+        # model = "google/byt5-small",
         max_new_tokens=512,
         compute_perplexity=True,
     )
@@ -75,4 +75,13 @@ if __name__ == "__main__":
         print(f"  format_valid : {r.format_valid}")
         print(f"  cell_accuracy: {r.cell_accuracy:.2f}")
         print(f"  raw_output   : {r.raw_output[:200]!r}")
+    
+    save_results(
+        metrics=metrics,
+        model_name="Meta-Llama-3-8B-Instruct",
+        inference_mode=InferenceMode.ZERO_SHOT,
+        problem_set=dataset,
+        difficulty=diff,
+        extra={"n_few_shot": 0, "max_new_tokens": 512, "notes": "baseline run"},
+    )
 

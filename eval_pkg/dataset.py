@@ -264,3 +264,71 @@ class NineGrid:
         if isinstance(value, str):
             return ast.literal_eval(value)
         raise ValueError(f"Cannot parse grid from type {type(value)}: {value!r}")
+
+class FourGridDifficultyFilter(DifficultyFilter):
+    _PRESETS: dict[Difficulty, dict] = {
+        Difficulty.EASY:   {"difficulty": 'easy'},
+        Difficulty.MEDIUM: {"difficuly": 'medium'},
+        Difficulty.HARD:   {"difficuly": 'hard'},
+    }
+
+    def __init__(
+        self,
+        missing_cells: tuple[int, int] | None = None,
+        given_ratio: tuple[float, float] | None = None,
+        naked_singles_count: tuple[int, int] | None = None,
+        hidden_singles_count: tuple[int, int] | None = None,
+        initial_resolution_rate: tuple[float, float] | None = None,
+        difficulty: str | None = None,
+        preset: Difficulty | None = None,
+    ):
+        if preset is not None:
+            p = self._PRESETS[preset]
+            difficulty               = difficulty            or p.get("difficulty")
+
+        self.difficulty              = difficulty  
+        self.missing_cells           = missing_cells
+        self.given_ratio             = given_ratio
+        self.naked_singles_count     = naked_singles_count
+        self.hidden_singles_count    = hidden_singles_count
+        self.initial_resolution_rate = initial_resolution_rate
+        self.preset                  = preset
+    
+    def matches(self, meta: dict) -> bool:
+        checks = [
+            ("difficulty",              self.difficulty),
+            ("missing_cells",           self.missing_cells),
+            ("given_ratio",             self.given_ratio),
+            ("naked_singles_count",     self.naked_singles_count),
+            ("hidden_singles_count",    self.hidden_singles_count),
+            ("initial_resolution_rate", self.initial_resolution_rate),
+        ]
+        for key, rng in checks:
+            if rng is not None and key in meta:
+                lo, hi = rng
+                if not (lo <= meta[key] <= hi):
+                    return False
+        return True
+
+    def __repr__(self) -> str:
+        if self.preset:
+            return f"DifficultyFilter(preset={self.preset.value!r})"
+        parts = []
+        for attr in ["difficulty", "missing_cells", "given_ratio", "naked_singles_count",
+                     "hidden_singles_count", "initial_resolution_rate"]:
+            v = getattr(self, attr)
+            if v is not None:
+                parts.append(f"{attr}={v}")
+        return f"DifficultyFilter({', '.join(parts)})"
+
+class FourGrid(NineGrid):
+
+    name="FourGrid"
+    _META_COLS = [
+        "board_id",
+        "root_hash",
+        "solution_id",
+        "size",
+        "difficulty",
+        "missing_cells",
+    ]

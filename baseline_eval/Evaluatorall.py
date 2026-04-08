@@ -543,16 +543,18 @@ class PromptBuilder:
                 f"Here are some solved examples for reference:{examples_block}\n"
                 "Now solve the following:\n"
             )
-
+        
+        rows = ",".join(f"[row{i+1}]" for i in range(problem.rows))
         return (
             f"{few_shot_prefix}"
             "Solve the following Sudoku puzzle.\n"
-            "The following grid is a 9x9 list of lists. Empty cells are represented by 0. \n"
+            f"The following grid is a {problem.rows}x{problem.cols} list of lists. Empty cells are represented by 0. \n"
             "INSTRUCTION: Fill only the cells containing 0. Preserving the initial values is mandatory while following all Sudoku rules.\n"
             f"\nPuzzle:\n{puzzle_as_list}\n\n"
-            "Return ONLY one solution, NO additional words, NO code, NO thinking steps or similar ONLY ONE solution in 9x9 list of lists completely solved.\n"
+            f"Return ONLY one solution, NO additional words, NO code, NO thinking steps or similar ONLY ONE solution in {problem.rows}x{problem.cols} list of lists completely solved.\n"
             "\nSOLUTION STRUCTURE\n"
-            "[[row1],[row2],[row3],[row4],[row5],[row6],[row7],[row8],[row9]]\n"
+            # "[[row1],[row2],[row3],[row4],[row5],[row6],[row7],[row8],[row9]]\n"
+            f"[{rows}]\n"
             "\nSOLUTION (follow the solution structure above)\n"
         )
 

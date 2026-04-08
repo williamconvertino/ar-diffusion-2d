@@ -12,7 +12,7 @@ from .eval_types import (
     AggregateMetrics,
     ProblemSet,
 )
-from .dataset import DifficultyFilter, NineGrid
+from .dataset import DifficultyFilter, FourGridDifficultyFilter, NineGrid, FourGrid
 from .models import LlamaBackend, LladaBackend, MockBackend, build_backend
 from .prompt import GridParser, PromptBuilder
 from .evaluator import GridEvaluator
@@ -24,7 +24,7 @@ __all__ = [
     # data types
     "Problem", "EvalResult", "AggregateMetrics", "ProblemSet",
     # dataset
-    "DifficultyFilter", "NineGrid",
+    "DifficultyFilter", "FourGridDifficultyFilter","NineGrid", "FourGrid"
     # models
     "LlamaBackend", "LladaBackend", "MockBackend", "build_backend",
     # prompt / parse

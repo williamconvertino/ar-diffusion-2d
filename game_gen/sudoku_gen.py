@@ -131,7 +131,6 @@ def print_board(board):
         print(" ".join(str(x) if x!=0 else "." for x in row))
 
 
-
 def board_hash(board):
     flat = ''.join(str(x) for row in board for x in row)
 
