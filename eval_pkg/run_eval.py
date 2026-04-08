@@ -47,7 +47,7 @@ def parse_args() -> argparse.Namespace:
                    help="HuggingFace model name, e.g. meta-llama/Meta-Llama-3-8B-Instruct")
     p.add_argument("--device",      default="auto",
                    help="Device for model loading: auto | cuda:0 | cpu (default: auto)")
-    p.add_argument("--backend",     choices=["auto", "llama", "llada"], default="auto",
+    p.add_argument("--backend",     choices=["auto", "llama", "llada", "deepseek"], default="auto",
                    help="Force a specific backend: auto | llama | llada (default: auto)")
 
     # --- inference ---

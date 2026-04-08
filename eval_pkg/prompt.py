@@ -7,7 +7,7 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from .eval_types import InferenceMode, Problem
+from .types import InferenceMode, Problem
 
 
 class PromptBuilder:
@@ -95,3 +95,127 @@ class GridParser:
                 continue
 
         return last_valid
+
+
+# ---------------------------------------------------------------------------
+# Grid visualisation
+# ---------------------------------------------------------------------------
+
+def render_grid(grid: list[list[Any]], title: str = "") -> str:
+    """
+    Render a 9×9 Sudoku grid with box borders, e.g.:
+
+      ┌───────┬───────┬───────┐
+      │ · 7 · │ · · · │ · 4 3 │
+      ...
+      └───────┴───────┴───────┘
+
+    Parameters
+    ----------
+    grid  : 9×9 list-of-lists; None or 0 = empty cell (shown as ·)
+    title : optional label printed above the grid
+    """
+    TOP    = "  ┌───────┬───────┬───────┐"
+    MID    = "  ├───────┼───────┼───────┤"
+    BOT    = "  └───────┴───────┴───────┘"
+    lines  = []
+
+    if title:
+        lines.append(f"  {title}")
+
+    for r, row in enumerate(grid):
+        if r == 0:
+            lines.append(TOP)
+        elif r % 3 == 0:
+            lines.append(MID)
+
+        cells = []
+        for c, val in enumerate(row):
+            cells.append("·" if (val is None or val == 0) else str(val))
+
+        line = "  │ {0} {1} {2} │ {3} {4} {5} │ {6} {7} {8} │".format(*cells)
+        lines.append(line)
+
+    lines.append(BOT)
+    return "\n".join(lines)
+
+
+def render_result(
+    problem: "Problem",
+    predicted: list[list[Any]] | None,
+    show_diff: bool = True,
+) -> str:
+    """
+    Print the puzzle and the model's predicted solution side by side,
+    with incorrect cells marked with * when show_diff=True.
+
+    Example output:
+
+      PUZZLE                    PREDICTION  (* = wrong)
+      ┌───────┬───────┬───────┐ ┌───────┬───────┬───────┐
+      │ · 7 · │ · · · │ · 4 3 │ │ 6 7 9 │ 5 1 8 │ 2 4 3 │
+      ...
+
+    Parameters
+    ----------
+    problem   : Problem instance (has .grid and .solution)
+    predicted : model output grid, or None if parsing failed
+    show_diff : mark cells that differ from solution with *
+    """
+    TOP  = "┌───────┬───────┬───────┐"
+    MID  = "├───────┼───────┼───────┤"
+    BOT  = "└───────┴───────┴───────┘"
+    SEP  = "   "   # gap between the two grids
+
+    def row_str(row, solution_row=None, pred_row=None):
+        """Build one │ ... │ ... │ ... │ line, optionally marking errors."""
+        cells = []
+        for c, val in enumerate(row):
+            ch = "·" if (val is None or val == 0) else str(val)
+            if show_diff and solution_row is not None and pred_row is not None:
+                # mark wrong predicted cells
+                sv = solution_row[c] if solution_row else None
+                pv = pred_row[c]     if (pred_row and c < len(pred_row)) else None
+                if pv is not None and sv is not None and pv != sv:
+                    ch = "*"
+            cells.append(ch)
+        return "│ {0} {1} {2} │ {3} {4} {5} │ {6} {7} {8} │".format(*cells)
+
+    puzzle    = problem.grid
+    solution  = problem.solution
+
+    if predicted is None:
+        pred_label = "PREDICTION  (parse failed)"
+        pred_grid  = [[0]*9 for _ in range(9)]
+    elif show_diff:
+        pred_label = "PREDICTION  (* = wrong)"
+        pred_grid  = predicted
+    else:
+        pred_label = "PREDICTION"
+        pred_grid  = predicted
+
+    # header line — pad puzzle label to align with grid width (25 chars)
+    puzzle_label = "PUZZLE"
+    header = f"  {puzzle_label:<25}{SEP}{pred_label}"
+
+    lines = [header]
+    for r in range(9):
+        if r == 0:
+            lines.append(f"  {TOP}{SEP}{TOP}")
+        elif r % 3 == 0:
+            lines.append(f"  {MID}{SEP}{MID}")
+
+        p_row = puzzle[r]   if r < len(puzzle)    else [0]*9
+        s_row = solution[r] if r < len(solution)  else None
+        d_row = pred_grid[r] if r < len(pred_grid) else None
+
+        puzzle_line = row_str(p_row)
+        pred_line   = row_str(
+            d_row or [0]*9,
+            solution_row=s_row,
+            pred_row=d_row,
+        )
+        lines.append(f"  {puzzle_line}{SEP}{pred_line}")
+
+    lines.append(f"  {BOT}{SEP}{BOT}")
+    return "\n".join(lines)

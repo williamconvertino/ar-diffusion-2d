@@ -6,13 +6,13 @@
 
 # ---- Dataset ----------------------------------------------------------------
 PARQUET="/data/evan/NineGrid/ninegrid.parquet"   # path to the .parquet file
-N_SAMPLES=5                                     # how many puzzles to evaluate
+N_SAMPLES=5000                                     # how many puzzles to evaluate
 DIFFICULTY="medium"                               # easy | medium | hard | all
 
 # ---- Model ------------------------------------------------------------------
-MODEL="GSAI-ML/LLaDA-8B-Instruct"      # HuggingFace model name
-BACKEND="llada"         # auto | llama | llada  (auto detects from model name)
-DEVICE="auto"          # auto | cuda:0 | cuda:1 | cpu
+MODEL="deepseek-ai/deepseek-math-7b-instruct"      # HuggingFace model name
+BACKEND="deepseek"         # auto | llama | llada  (auto detects from model name)
+DEVICE="cuda:1"          # auto | cuda:0 | cuda:1 | cpu
 
 # ---- Inference --------------------------------------------------------------
 MODE="zero_shot"           # zero_shot | few_shot
