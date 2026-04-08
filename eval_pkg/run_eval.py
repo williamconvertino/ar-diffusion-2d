@@ -16,10 +16,12 @@ sys.path.insert(0, os.path.dirname(__file__))
 from eval_pkg import (
     Difficulty,
     DifficultyFilter,
+    FourGridDifficultyFilter,
     GridEvaluator,
     InferenceMode,
     LlamaBackend,
     NineGrid,
+    FourGrid,
     save_results,
 )
 
@@ -41,6 +43,11 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--difficulty",  choices=["easy", "medium", "hard", "all"],
                    default="medium",
                    help="Difficulty tier: easy | medium | hard | all (default: medium)")
+    p.add_argument("--problem",   choices=["ninegrid", "fourgrid", "minesweeper9", "all"],
+                   default="ninegrid",
+                   help="Problem Name: ninegrid, fourgrid, minesweeper9")
+    p.add_argument("--from_preset",   type=bool, default=True,
+                   help="Flag whether to load from preset")
 
     # --- model ---
     p.add_argument("--model",       required=True,
@@ -84,10 +91,24 @@ def main() -> None:
     os.makedirs(args.output_dir, exist_ok=True)
 
     # ---- 1. dataset --------------------------------------------------------
-    difficulty = (
-        None if args.difficulty == "all"
-        else DifficultyFilter.from_preset(Difficulty(args.difficulty))
-    )
+    # if args.difficulty == "all":
+    #     difficulty = None
+    # elif args.problem == "ninegrid" and args.from_preset:
+    #     difficulty = DifficultyFilter.from_preset(Difficulty(args.difficulty))
+    # else:
+    #     difficulty = DifficultyFilter.from_difficulty(Difficulty(args.difficulty))
+    
+    if args.problem == "ninegrid":
+        difficulty = (
+            None if args.difficulty == "all"
+            else DifficultyFilter.from_preset(Difficulty(args.difficulty))
+        )
+    
+    if args.problem == "fourgrid":
+        difficulty = (
+            None if args.difficulty == "all"
+            else FourGridDifficultyFilter.from_preset(Difficulty(args.difficulty))
+        )
 
     print(f"\n{'='*60}")
     print(f"  Model      : {args.model}")
@@ -97,12 +118,21 @@ def main() -> None:
     print(f"{'='*60}\n")
 
     print("Loading dataset...")
-    dataset = NineGrid(
-        parquet_path=args.parquet,
-        n_samples=args.n_samples,
-        difficulty=difficulty,
-        few_shot_strategy="easiest",
-    )
+    if args.problem == "ninegrid":
+        dataset = NineGrid(
+            parquet_path=args.parquet,
+            n_samples=args.n_samples,
+            difficulty=difficulty,
+            few_shot_strategy="easiest",
+        )
+    
+    if args.problem == "fourgrid":
+        dataset = FourGrid(
+            parquet_path=args.parquet,
+            n_samples=args.n_samples,
+            difficulty=difficulty,
+            few_shot_strategy="easiest",
+        )
     dataset.info()
 
     # ---- 2. load model once ------------------------------------------------
