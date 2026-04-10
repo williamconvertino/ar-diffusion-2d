@@ -1,6 +1,7 @@
 # Datasets, Logs, and Checkpoints
 results/
 logs/
+LLaDA/
 
 # Environment
 env.sh
