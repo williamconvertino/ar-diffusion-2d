@@ -2,6 +2,7 @@
 results/
 logs/
 data/*
+experiments/
 
 baseline_eval/Evaluator.py
 baseline_eval/Models.py

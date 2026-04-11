@@ -38,6 +38,7 @@ class DifficultyFilter:
         Difficulty.EASY:   {"missing_cells": (17, 35),  "initial_resolution_rate": (0.5, 1.0)},
         Difficulty.MEDIUM: {"missing_cells": (36, 49),  "initial_resolution_rate": (0.2, 0.5)},
         Difficulty.HARD:   {"missing_cells": (50, 64),  "initial_resolution_rate": (0.0, 0.2)},
+        Difficulty.EXPERT: {"missing_cells": (58, 64),  "initial_resolution_rate": (0.0, 0.05)},
     }
 
     def __init__(
@@ -129,10 +130,18 @@ class NineGrid:
         difficulty: DifficultyFilter | None = None,
         few_shot_strategy: str = "easiest",
         seed: int = 42,
+        few_shot_pool_size: int = 500,
     ):
         self._rng = np.random.default_rng(seed)
         self._few_shot_strategy = few_shot_strategy
-        self._problems = self._load(parquet_path, n_samples, difficulty)
+
+        self._problems, self._few_shot_pool_problems = self._load_with_few_shot_pool(
+            parquet_path=parquet_path,
+            n_samples=n_samples,
+            difficulty=difficulty,
+            few_shot_pool_size=few_shot_pool_size,
+        )
+
         if not self._problems:
             raise ValueError("No problems loaded — check the path and difficulty filter.")
 
@@ -145,27 +154,45 @@ class NineGrid:
         return iter(self._problems)
 
     def few_shot_examples(self, k: int = 3) -> list[Problem]:
-        k = min(k, len(self._problems))
+        """
+        Return k demonstration problems from a held-out pool with no overlap
+        with the loaded/eval problems.
+        """
+        pool = self._few_shot_pool_problems
+        if not pool:
+            return []
+
+        k = min(k, len(pool))
         if self._few_shot_strategy == "easiest":
-            return sorted(self._problems,
-                          key=lambda p: p.metadata.get("missing_cells", 0))[:k]
+            return sorted(
+                pool,
+                key=lambda p: p.metadata.get("missing_cells", 0)
+            )[:k]
         elif self._few_shot_strategy == "hardest":
-            return sorted(self._problems,
-                          key=lambda p: p.metadata.get("missing_cells", 0),
-                          reverse=True)[:k]
+            return sorted(
+                pool,
+                key=lambda p: p.metadata.get("missing_cells", 0),
+                reverse=True
+            )[:k]
         else:
-            indices = self._rng.choice(len(self._problems), size=k, replace=False)
-            return [self._problems[i] for i in indices]
+            indices = self._rng.choice(len(pool), size=k, replace=False)
+            return [pool[i] for i in indices]
 
     # ---- inspection helpers -------------------------------------------------
 
     def filter(self, difficulty: DifficultyFilter) -> "NineGrid":
         """Return a new NineGrid with only problems matching the filter."""
         filtered = [p for p in self._problems if difficulty.matches(p.metadata)]
+        filtered_ids = {p.problem_id for p in filtered}
+
         clone = object.__new__(NineGrid)
         clone._rng = self._rng
         clone._few_shot_strategy = self._few_shot_strategy
         clone._problems = filtered
+        clone._few_shot_pool_problems = [
+            p for p in self._few_shot_pool_problems
+            if p.problem_id not in filtered_ids
+        ]
         return clone
 
     def difficulty_summary(self) -> dict:
@@ -210,21 +237,34 @@ class NineGrid:
 
     # ---- loading ------------------------------------------------------------
 
-    def _load(
+    def _load_with_few_shot_pool(
         self,
-        path: str,
+        parquet_path: str,
         n_samples: int | None,
         difficulty: DifficultyFilter | None,
-    ) -> list[Problem]:
+        few_shot_pool_size: int,
+    ) -> tuple[list[Problem], list[Problem]]:
+        """
+        Single-pass loader:
+        - fills the main problem list first
+        - then fills a held-out few-shot pool with non-overlapping examples
+        This fixes the few-shot leakage bug without doing a second full dataset load.
+        """
         import ast
         try:
             import pandas as pd
         except ImportError as e:
             raise ImportError("Install `pandas` and `pyarrow` to load NineGrid.") from e
 
-        df = pd.read_parquet(path) if path.endswith(".parquet") else pd.read_csv(path)
+        df = pd.read_parquet(parquet_path) if parquet_path.endswith(".parquet") else pd.read_csv(parquet_path)
 
         problems: list[Problem] = []
+        few_shot_pool: list[Problem] = []
+        main_problem_ids: set[str] = set()
+
+        # Keep the demo policy from the second file: use easy examples for few-shot demos
+        demo_filter = DifficultyFilter.from_preset(Difficulty.EASY)
+
         for idx, row in df.iterrows():
             puzzle_grid   = self._coerce_grid(row["puzzle_grid"])
             solution_grid = self._coerce_grid(row["solution_grid"])
@@ -241,20 +281,36 @@ class NineGrid:
                             pass
                     meta[col] = val
 
-            if difficulty is not None and not difficulty.matches(meta):
-                continue
-
-            problems.append(Problem(
+            problem = Problem(
                 problem_id=str(row.get("id", idx)),
                 grid=grid,
                 solution=solution_grid,
                 metadata=meta,
-            ))
+            )
 
-            if n_samples is not None and len(problems) >= n_samples:
+            # First, fill the main loaded/eval problems exactly as before
+            if difficulty is None or difficulty.matches(meta):
+                if n_samples is None or len(problems) < n_samples:
+                    problems.append(problem)
+                    main_problem_ids.add(problem.problem_id)
+                    continue
+
+            # After the main set is full, collect held-out few-shot demos
+            if (
+                len(few_shot_pool) < few_shot_pool_size
+                and problem.problem_id not in main_problem_ids
+                and demo_filter.matches(meta)
+            ):
+                few_shot_pool.append(problem)
+
+            if (
+                n_samples is not None
+                and len(problems) >= n_samples
+                and len(few_shot_pool) >= few_shot_pool_size
+            ):
                 break
 
-        return problems
+        return problems, few_shot_pool
 
     @staticmethod
     def _coerce_grid(value: Any) -> list[list[int]]:
@@ -264,6 +320,7 @@ class NineGrid:
         if isinstance(value, str):
             return ast.literal_eval(value)
         raise ValueError(f"Cannot parse grid from type {type(value)}: {value!r}")
+
 
 class FourGridDifficultyFilter(DifficultyFilter):
     _PRESETS: dict[Difficulty, dict] = {
@@ -284,16 +341,16 @@ class FourGridDifficultyFilter(DifficultyFilter):
     ):
         if preset is not None:
             p = self._PRESETS[preset]
-            difficulty               = difficulty            or p.get("difficulty")
+            difficulty               = difficulty or p.get("difficulty")
 
-        self.difficulty              = difficulty  
+        self.difficulty              = difficulty
         self.missing_cells           = missing_cells
         self.given_ratio             = given_ratio
         self.naked_singles_count     = naked_singles_count
         self.hidden_singles_count    = hidden_singles_count
         self.initial_resolution_rate = initial_resolution_rate
         self.preset                  = preset
-    
+
     def matches(self, meta: dict) -> bool:
         checks = [
             ("difficulty",              self.difficulty),
@@ -321,9 +378,10 @@ class FourGridDifficultyFilter(DifficultyFilter):
                 parts.append(f"{attr}={v}")
         return f"DifficultyFilter({', '.join(parts)})"
 
+
 class FourGrid(NineGrid):
 
-    name="FourGrid"
+    name = "FourGrid"
     _META_COLS = [
         "board_id",
         "root_hash",

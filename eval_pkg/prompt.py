@@ -7,7 +7,7 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from .types import InferenceMode, Problem
+from .eval_types import InferenceMode, Problem
 
 
 class PromptBuilder:

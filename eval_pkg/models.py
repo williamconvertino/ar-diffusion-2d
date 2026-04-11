@@ -101,24 +101,17 @@ class LladaBackend(_BaseModelBackend):
             raise ImportError("Install `transformers` and `torch`.") from e
 
         logger.info("Loading LLaDA model: %s", model_name)
-
         self._tokenizer = AutoTokenizer.from_pretrained(
             model_name,
             trust_remote_code=True,
         )
-
         self._model = AutoModel.from_pretrained(
             model_name,
+            device_map=device,
+            torch_dtype=torch.bfloat16,        # LLaDA uses dtype= not torch_dtype=
             trust_remote_code=True,
-            torch_dtype=torch.bfloat16,
             **kwargs,
         )
-
-        if device == "auto":
-            device = "cuda:0" if torch.cuda.is_available() else "cpu"
-
-        self._model = self._model.to(device)
-        self._model.eval()
         self._device = next(self._model.parameters()).device
 
     def generate(self, prompt: str, max_new_tokens: int = 512, **kwargs) -> str:
@@ -127,20 +120,24 @@ class LladaBackend(_BaseModelBackend):
         inputs = self._tokenizer(prompt, return_tensors="pt")
         inputs = {k: v.to(self._device) for k, v in inputs.items()}
 
+        kwargs.pop("max_length", None)
+
+        gen_kwargs = {
+            "max_new_tokens": max_new_tokens,
+            "use_cache": False,   # <- important
+            **kwargs,
+        }
+
         with torch.no_grad():
-            out = self._model.generate(
-                **inputs,
-                max_new_tokens=max_new_tokens,
-                steps=kwargs.pop("steps", 64),
-                temperature=kwargs.pop("temperature", 0.0),
-                **kwargs,
-            )
+            out = self._model.generate(**inputs, **gen_kwargs)
 
         new_tokens = out[0][inputs["input_ids"].shape[-1]:]
         return self._tokenizer.decode(new_tokens, skip_special_tokens=True)
 
     def log_prob(self, prompt: str, completion: str) -> float | None:
+            # LLaDA does not naturally expose token log-probs
         return None
+
 
 class DeepSeekBackend(_BaseModelBackend):
     """
@@ -163,10 +160,10 @@ class DeepSeekBackend(_BaseModelBackend):
         self._tokenizer = AutoTokenizer.from_pretrained(model_name)
         self._model = AutoModelForCausalLM.from_pretrained(
             model_name,
-            # device_map=device,
+            device_map=device,
             torch_dtype=torch.bfloat16,
             **kwargs,
-        ).to(device) 
+        )
         # load the repo's generation config — sets pad_token_id, eos_token_id etc.
         self._model.generation_config = GenerationConfig.from_pretrained(model_name)
         self._model.generation_config.pad_token_id = (

@@ -16,12 +16,10 @@ sys.path.insert(0, os.path.dirname(__file__))
 from eval_pkg import (
     Difficulty,
     DifficultyFilter,
-    FourGridDifficultyFilter,
     GridEvaluator,
     InferenceMode,
     LlamaBackend,
     NineGrid,
-    FourGrid,
     save_results,
 )
 
@@ -40,14 +38,9 @@ def parse_args() -> argparse.Namespace:
                    help="Path to ninegrid .parquet (or .csv) file")
     p.add_argument("--n-samples",   type=int, default=100,
                    help="Number of problems to evaluate (default: 100)")
-    p.add_argument("--difficulty",  choices=["easy", "medium", "hard", "all"],
+    p.add_argument("--difficulty",  choices=["easy", "medium", "hard", "expert", "all"],
                    default="medium",
                    help="Difficulty tier: easy | medium | hard | all (default: medium)")
-    p.add_argument("--problem",   choices=["ninegrid", "fourgrid", "minesweeper9", "all"],
-                   default="ninegrid",
-                   help="Problem Name: ninegrid, fourgrid, minesweeper9")
-    p.add_argument("--from_preset",   type=bool, default=True,
-                   help="Flag whether to load from preset")
 
     # --- model ---
     p.add_argument("--model",       required=True,
@@ -55,7 +48,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--device",      default="auto",
                    help="Device for model loading: auto | cuda:0 | cpu (default: auto)")
     p.add_argument("--backend",     choices=["auto", "llama", "llada", "deepseek"], default="auto",
-                   help="Force a specific backend: auto | llama | llada (default: auto)")
+                   help="Force a specific backend: auto | llama | llada | deepseek (default: auto)")
 
     # --- inference ---
     p.add_argument("--mode",        choices=["zero_shot", "few_shot"], default="zero_shot",
@@ -72,6 +65,12 @@ def parse_args() -> argparse.Namespace:
                    help="Directory to save result JSON files (default: ./results)")
     p.add_argument("--notes",       default="",
                    help="Free-text notes appended to the saved JSON")
+
+    # --- visualisation ---
+    p.add_argument("--visualize",   type=int, default=0, metavar="N",
+                   help="Print before/after boards for N problems after evaluation (default: 0 = off)")
+    p.add_argument("--visualize-filter", choices=["all", "correct", "wrong"], default="all",
+                   help="Which problems to visualize: all | correct | wrong (default: all)")
 
     return p.parse_args()
 
@@ -93,24 +92,10 @@ def main() -> None:
     os.makedirs(args.output_dir, exist_ok=True)
 
     # ---- 1. dataset --------------------------------------------------------
-    # if args.difficulty == "all":
-    #     difficulty = None
-    # elif args.problem == "ninegrid" and args.from_preset:
-    #     difficulty = DifficultyFilter.from_preset(Difficulty(args.difficulty))
-    # else:
-    #     difficulty = DifficultyFilter.from_difficulty(Difficulty(args.difficulty))
-    
-    if args.problem == "ninegrid":
-        difficulty = (
-            None if args.difficulty == "all"
-            else DifficultyFilter.from_preset(Difficulty(args.difficulty))
-        )
-    
-    if args.problem == "fourgrid":
-        difficulty = (
-            None if args.difficulty == "all"
-            else FourGridDifficultyFilter.from_preset(Difficulty(args.difficulty))
-        )
+    difficulty = (
+        None if args.difficulty == "all"
+        else DifficultyFilter.from_preset(Difficulty(args.difficulty))
+    )
 
     print(f"\n{'='*60}")
     print(f"  Model      : {args.model}")
@@ -120,30 +105,23 @@ def main() -> None:
     print(f"{'='*60}\n")
 
     print("Loading dataset...")
-    if args.problem == "ninegrid":
-        dataset = NineGrid(
-            parquet_path=args.parquet,
-            n_samples=args.n_samples,
-            difficulty=difficulty,
-            few_shot_strategy="easiest",
-        )
-    
-    if args.problem == "fourgrid":
-        dataset = FourGrid(
-            parquet_path=args.parquet,
-            n_samples=args.n_samples,
-            difficulty=difficulty,
-            few_shot_strategy="easiest",
-        )
+    dataset = NineGrid(
+        parquet_path=args.parquet,
+        n_samples=args.n_samples,
+        difficulty=difficulty,
+        few_shot_strategy="easiest",
+    )
     dataset.info()
 
     # ---- 2. load model once ------------------------------------------------
     print(f"\nLoading model: {args.model} (backend: {args.backend})")
-    from eval_pkg.models import LladaBackend
+    from eval_pkg.models import LladaBackend, DeepSeekBackend
     if args.backend == "llada":
         backend = LladaBackend(args.model, device=args.device)
     elif args.backend == "llama":
         backend = LlamaBackend(args.model, device=args.device)
+    elif args.backend == "deepseek":
+        backend = DeepSeekBackend(args.model, device=args.device)
     else:
         from eval_pkg.models import build_backend
         backend = build_backend(args.model, device=args.device)
@@ -188,6 +166,60 @@ def main() -> None:
             "notes":           args.notes,
         },
     )
+
+    # ---- 5. visualise (optional) ------------------------------------------
+    if args.visualize > 0:
+        _visualize(
+            metrics=metrics,
+            problems=list(dataset),
+            n=args.visualize,
+            filter_mode=args.visualize_filter,
+        )
+
+
+def _visualize(
+    metrics,
+    problems: list,
+    n: int,
+    filter_mode: str,
+) -> None:
+    from eval_pkg.prompt import render_result
+
+    # build a lookup from problem_id -> Problem
+    prob_lookup = {p.problem_id: p for p in problems}
+
+    # filter results
+    if filter_mode == "correct":
+        pool = [r for r in metrics.per_problem if r.exact_match]
+        label = "correct"
+    elif filter_mode == "wrong":
+        pool = [r for r in metrics.per_problem if not r.exact_match]
+        label = "wrong"
+    else:
+        pool = metrics.per_problem
+        label = "all"
+
+    to_show = pool[:n]
+    if not to_show:
+        print(f"  (no {label} results to visualize)")
+        return
+
+    print(f"\n{'='*60}")
+    print(f"  Visualizing {len(to_show)} {label} problem(s)")
+    print(f"{'='*60}")
+
+    for r in to_show:
+        prob = prob_lookup.get(r.problem_id)
+        if prob is None:
+            continue
+        status = "✓ CORRECT" if r.exact_match else f"✗ WRONG  (cell acc: {r.cell_accuracy:.0%})"
+        print(f"\n  Problem {r.problem_id}  —  {status}  —  {r.inference_time_s:.1f}s")
+        if not r.format_valid:
+            print("  (model output could not be parsed as a valid grid)")
+            print(f"  Raw output: {r.raw_output[:300]!r}")
+        else:
+            print(render_result(prob, r.predicted))
+        print()
 
 
 if __name__ == "__main__":
