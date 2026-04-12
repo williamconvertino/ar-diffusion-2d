@@ -1,0 +1,107 @@
+{
+  "timestamp": "20260411_175250",
+  "experiment": {
+    "model": "meta-llama/Meta-Llama-3-8B-Instruct",
+    "inference_mode": "zero_shot",
+    "problem_set": "FourGrid",
+    "n_problems": 5,
+    "difficulty_filter": {
+      "preset": "medium",
+      "missing_cells": [
+        7,
+        9
+      ]
+    },
+    "n_few_shot": 0,
+    "max_new_tokens": 512,
+    "device": "auto",
+    "notes": "test llada run"
+  },
+  "dataset_difficulty_summary": {
+    "missing_cells": {
+      "min": 8.0,
+      "max": 8.0,
+      "mean": 8.0,
+      "median": 8.0
+    }
+  },
+  "aggregate_metrics": {
+    "exact_match_rate": 0.0,
+    "mean_cell_accuracy": 0.6125,
+    "mean_row_accuracy": 0.3,
+    "mean_col_accuracy": 0.2,
+    "format_validity_rate": 1.0,
+    "mean_inference_time_s": 14.971656360197812,
+    "mean_perplexity": null
+  },
+  "position_accuracy_map": {
+    "0,0": 0.2,
+    "0,1": 0.4,
+    "0,2": 0.6,
+    "0,3": 0.6,
+    "1,0": 0.6,
+    "1,1": 0.4,
+    "1,2": 0.8,
+    "1,3": 0.4,
+    "2,0": 0.8,
+    "2,1": 0.6,
+    "2,2": 0.6,
+    "2,3": 0.4,
+    "3,0": 1.0,
+    "3,1": 0.8,
+    "3,2": 1.0,
+    "3,3": 0.6
+  },
+  "per_problem": [
+    {
+      "problem_id": "1",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 15.32345765689388,
+      "perplexity": null
+    },
+    {
+      "problem_id": "4",
+      "exact_match": false,
+      "cell_accuracy": 0.6875,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 14.882769224699587,
+      "perplexity": null
+    },
+    {
+      "problem_id": "7",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 14.87385687744245,
+      "perplexity": null
+    },
+    {
+      "problem_id": "10",
+      "exact_match": false,
+      "cell_accuracy": 0.625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 14.882340455893427,
+      "perplexity": null
+    },
+    {
+      "problem_id": "13",
+      "exact_match": false,
+      "cell_accuracy": 0.75,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 14.89585758605972,
+      "perplexity": null
+    }
+  ]
+}

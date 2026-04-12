@@ -9,6 +9,7 @@ import argparse
 import logging
 import os
 import sys
+from pathlib import Path
 
 # allow running from the repo root without installing the package
 sys.path.insert(0, os.path.dirname(__file__))
@@ -18,6 +19,7 @@ from eval_pkg import (
     DifficultyFilter,
     FourGridDifficultyFilter,
     GridEvaluator,
+    EvaluatorViz,
     InferenceMode,
     LlamaBackend,
     NineGrid,
@@ -32,7 +34,7 @@ from eval_pkg import (
 
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(
-        description="Evaluate LLaMA / LLaDA on the NineGrid Sudoku benchmark."
+        description="Evaluate LLaMA / LLaDA on Sudoku benchmark."
     )
 
     # --- dataset ---
@@ -54,7 +56,7 @@ def parse_args() -> argparse.Namespace:
                    help="HuggingFace model name, e.g. meta-llama/Meta-Llama-3-8B-Instruct")
     p.add_argument("--device",      default="auto",
                    help="Device for model loading: auto | cuda:0 | cpu (default: auto)")
-    p.add_argument("--backend",     choices=["auto", "llama", "llada"], default="auto",
+    p.add_argument("--backend",     choices=["auto", "llama", "llada", "deepseek"], default="auto",
                    help="Force a specific backend: auto | llama | llada (default: auto)")
 
     # --- inference ---
@@ -188,6 +190,18 @@ def main() -> None:
             "notes":           args.notes,
         },
     )
+
+    if backend == 'llada':
+        visualizer = EvaluatorViz(
+            viz_path = Path(output_path).parent / 'llada_viz_out.txt',
+            problem_set=dataset,
+            inference_mode=InferenceMode(args.mode),
+            model=backend,
+            n_few_shot=args.n_few_shot,
+            max_new_tokens=args.max_new_tokens,
+            compute_perplexity=args.perplexity,
+        )
+        visualizer.evaluate(max_problems=1)
 
 
 if __name__ == "__main__":

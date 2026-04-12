@@ -15,7 +15,7 @@ from .eval_types import (
 from .dataset import DifficultyFilter, FourGridDifficultyFilter, NineGrid, FourGrid
 from .models import LlamaBackend, LladaBackend, MockBackend, build_backend
 from .prompt import GridParser, PromptBuilder
-from .evaluator import GridEvaluator
+from .evaluator import GridEvaluator,EvaluatorViz
 from .results import save_results
  
 __all__ = [
@@ -30,7 +30,7 @@ __all__ = [
     # prompt / parse
     "PromptBuilder", "GridParser",
     # evaluation
-    "GridEvaluator",
+    "GridEvaluator","EvaluatorViz"
     # results
     "save_results",
 ]

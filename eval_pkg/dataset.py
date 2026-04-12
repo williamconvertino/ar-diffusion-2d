@@ -197,7 +197,7 @@ class NineGrid:
         """Print a human-readable summary of the loaded dataset."""
         counts  = self.count_by_difficulty()
         summary = self.difficulty_summary()
-        print("NineGrid Dataset")
+        print(f"{self.name} Dataset")
         print(f"  Total problems : {len(self._problems):,}")
         print()
         print("  By difficulty tier:")
@@ -267,9 +267,9 @@ class NineGrid:
 
 class FourGridDifficultyFilter(DifficultyFilter):
     _PRESETS: dict[Difficulty, dict] = {
-        Difficulty.EASY:   {"difficulty": 'easy'},
-        Difficulty.MEDIUM: {"difficuly": 'medium'},
-        Difficulty.HARD:   {"difficuly": 'hard'},
+        Difficulty.EASY:   {"difficulty": 'easy', "missing_cells": (4, 7)    },
+        Difficulty.MEDIUM: {"difficuly": 'medium', "missing_cells": (7, 9)   },
+        Difficulty.HARD:   {"difficuly": 'hard', "missing_cells": (10, 12)     },
     }
 
     def __init__(
@@ -285,6 +285,7 @@ class FourGridDifficultyFilter(DifficultyFilter):
         if preset is not None:
             p = self._PRESETS[preset]
             difficulty               = difficulty            or p.get("difficulty")
+            missing_cells            = missing_cells         or p.get("missing_cells")
 
         self.difficulty              = difficulty  
         self.missing_cells           = missing_cells

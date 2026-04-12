@@ -8,6 +8,7 @@ import logging
 import time
 
 import numpy as np
+from functools import partial
 
 from .eval_types import (
     AggregateMetrics, EvalResult, InferenceMode,
@@ -80,7 +81,8 @@ class GridEvaluator:
         )
 
         for prob in iterator:
-            result = self._evaluate_one(prob)
+            # result = self._evaluate_one(prob)
+            result = self.evaluate_one(prob)
             results.append(result)
             logger.info(
                 "[%s] exact=%s cell_acc=%.2f format=%s",
@@ -101,7 +103,7 @@ class GridEvaluator:
 
     # ---- internals ---------------------------------------------------------
 
-    def _evaluate_one(self, problem: Problem) -> EvalResult:
+    def _evaluate_one(self, problem: Problem, **gen_kwargs) -> EvalResult:
         prompt = PromptBuilder.build(
             problem,
             mode=self.inference_mode,
@@ -109,7 +111,7 @@ class GridEvaluator:
         )
 
         t0 = time.perf_counter()
-        raw = self.backend.generate(prompt, max_new_tokens=self.max_new_tokens)
+        raw = self.backend.generate(prompt, max_new_tokens=self.max_new_tokens, **gen_kwargs)
         elapsed = time.perf_counter() - t0
 
         predicted    = GridParser.parse(raw, problem.rows, problem.cols)
@@ -186,3 +188,11 @@ class GridEvaluator:
             position_accuracy_map= pos_acc,
             per_problem          = results,
         )
+
+class EvaluatorViz(GridEvaluator):
+    def __init__(self, viz_path, **eval_kwargs):
+        super().__init__(**eval_kwargs)
+        self.viz_path =         viz_path        # Path to store the generation text for LLaDA visualization
+    
+    def evaluate_one(self, problem: Problem, **kwargs):
+        return super()._evaluate_one(problem, viz_path=self.viz_path, **kwargs)
