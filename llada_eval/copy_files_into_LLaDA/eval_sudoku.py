@@ -518,19 +518,38 @@ def run_generation_batch(
     attention_mask = encoded["attention_mask"].to(device)
 
     with torch.no_grad():
-        out = generate(
-            model, input_ids,
-            attention_mask=attention_mask,
-            steps=steps,
-            gen_length=gen_length,
-            block_length=block_length,
-            temperature=0.0,
-            cfg_scale=0.0,
-            remasking="low_confidence",
-            mask_id=mask_id,
-        )
+        if 'llada' in model.name_or_path.lower():
+            out = generate(
+                model, input_ids,
+                attention_mask=attention_mask,
+                steps=steps,
+                gen_length=gen_length,
+                block_length=block_length,
+                temperature=0.0,
+                cfg_scale=0.0,
+                remasking="low_confidence",
+                mask_id=mask_id,
+            )
+            generated_ids = out[:, input_ids.shape[1]:]
 
-    generated_ids = out[:, input_ids.shape[1]:]
+        if 'dream' in model.name_or_path.lower():
+            output = model.diffusion_generate(
+                                        input_ids,
+                                        attention_mask=attention_mask,
+                                        max_new_tokens=gen_length,
+                                        output_history=False,           # Turned false to try increase batchsize
+                                        return_dict_in_generate=True,
+                                        steps=steps,
+                                        temperature=0.2,
+                                        top_p=0.95,
+                                        alg="entropy",
+                                        alg_temp=0.,
+                                    )
+            generated_ids = [
+                                g[len(p):] for p, g in zip(input_ids, output.sequences)
+                            ]
+
+    
     return tokenizer.batch_decode(generated_ids, skip_special_tokens=True)
 
 
@@ -553,6 +572,7 @@ def evaluate_difficulty(
     n_success_samples: int = 5,
     n_failure_samples: int = 10,
     mask_id: int = MASK_ID_DEFAULT,
+    out_prefix: Path | None = None,
 ) -> dict:
     results:   list[dict] = []
     successes: list[dict] = []
@@ -628,6 +648,10 @@ def evaluate_difficulty(
             flush=True,
         )
 
+        # Save per sample ids at the end of a batch
+        if out_prefix:
+            save_per_sample({"per_sample": results}, out_prefix)
+
         torch.cuda.empty_cache()
 
     return {
@@ -642,6 +666,16 @@ def evaluate_difficulty(
 # ===============================================================================
 # 7.  Saving
 # ===============================================================================
+
+def save_per_sample(result:dict, out_prefix: Path) -> None:
+    prefix = str(out_prefix)
+    per_sample_path = prefix + ".per_sample.jsonl"
+    with open(per_sample_path, "w") as f:
+        for s in result["per_sample"]:
+            row = {k: v for k, v in s.items() if k != "prompt"}
+            f.write(json.dumps(row, default=str) + "\n")
+
+            f.flush()
 
 def save_results(result: dict, out_prefix: Path, args: argparse.Namespace) -> None:
     prefix = str(out_prefix)
@@ -787,16 +821,61 @@ def main() -> None:
             print(f"  Reserving {len(few_shot_examples)} few-shot examples "
                   f"(excluded from test set).")
 
-        # Subsample test pool
-        test_pool = [p for p in all_problems if p.problem_id not in few_shot_ids]
-        if len(test_pool) > args.n_samples:
-            rng     = np.random.default_rng(args.seed)
-            indices = rng.choice(len(test_pool), size=args.n_samples, replace=False)
-            test_problems = [test_pool[int(i)] for i in sorted(indices)]
-        else:
-            test_problems = test_pool
-        print(f"  Test set   : {len(test_problems):,} problems")
+        # TODO: Add Logic for continued inference
+        # --- Continued inference logic ---
+        resume_file = Path(output_dir) / f"{diff_name}_{shot_tag}.per_sample.jsonl"
 
+        completed_ids: set[str] = set()
+
+        if resume_file.exists():
+            print(f"  Found existing predictions at {resume_file}, loading for resume...")
+
+            with open(resume_file, "r") as f:
+                for line in f:
+                    try:
+                        row = json.loads(line)
+                        if "problem_id" in row:
+                            completed_ids.add(str(row["problem_id"]))
+                    except json.JSONDecodeError:
+                        continue  # skip malformed lines
+
+            print(f"  Loaded {len(completed_ids):,} completed samples")
+
+        # Subsample test pool
+        # test_pool = [p for p in all_problems if p.problem_id not in few_shot_ids]
+        # Filter out already completed + few-shot
+        test_pool = [
+            p for p in all_problems
+            if (p.problem_id not in few_shot_ids) and (p.problem_id not in completed_ids)
+        ]
+        # --- Resample if needed ---
+        n_needed = args.n_samples - len(completed_ids)
+
+        if n_needed <= 0:
+            print("  Already have enough completed samples, skipping inference.")
+            test_problems = []
+        else:
+            if len(test_pool) > n_needed:
+                rng = np.random.default_rng(args.seed)
+                indices = rng.choice(len(test_pool), size=n_needed, replace=False)
+                test_problems = [test_pool[int(i)] for i in sorted(indices)]
+            else:
+                test_problems = test_pool
+        
+        # Original Few Shot filtering logic
+        # if len(test_pool) > args.n_samples:
+        #     rng     = np.random.default_rng(args.seed)
+        #     indices = rng.choice(len(test_pool), size=args.n_samples, replace=False)
+        #     test_problems = [test_pool[int(i)] for i in sorted(indices)]
+        # else:
+        #     test_problems = test_pool
+        # print(f"  Test set   : {len(test_problems):,} problems")
+        
+        print(f"  Test set (this run): {len(test_problems):,} problems")
+        print(f"  Total after completion: {len(completed_ids) + len(test_problems):,} / {args.n_samples}")
+        
+        out_prefix = output_dir / f"{diff_name}_{shot_tag}"
+        
         t0     = time.time()
         result = evaluate_difficulty(
             model=model, tokenizer=tokenizer,
@@ -812,6 +891,7 @@ def main() -> None:
             n_success_samples=args.n_success_samples,
             n_failure_samples=args.n_failure_samples,
             mask_id=args.mask_id,
+            out_prefix = out_prefix
         )
         elapsed = time.time() - t0
 
