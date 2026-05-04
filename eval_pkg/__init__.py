@@ -13,7 +13,7 @@ from .eval_types import (
     ProblemSet,
 )
 from .dataset import DifficultyFilter, FourGridDifficultyFilter, NineGrid, FourGrid
-from .models import LlamaBackend, LladaBackend, MockBackend, build_backend
+from .models import LlamaBackend, LladaBackend, DreamBackend, MockBackend, build_backend
 from .prompt import GridParser, PromptBuilder
 from .evaluator import GridEvaluator,EvaluatorViz
 from .results import save_results

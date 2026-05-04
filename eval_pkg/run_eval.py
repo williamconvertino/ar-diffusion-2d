@@ -22,6 +22,7 @@ from eval_pkg import (
     EvaluatorViz,
     InferenceMode,
     LlamaBackend,
+    DreamBackend,
     NineGrid,
     FourGrid,
     save_results,
@@ -56,7 +57,7 @@ def parse_args() -> argparse.Namespace:
                    help="HuggingFace model name, e.g. meta-llama/Meta-Llama-3-8B-Instruct")
     p.add_argument("--device",      default="auto",
                    help="Device for model loading: auto | cuda:0 | cpu (default: auto)")
-    p.add_argument("--backend",     choices=["auto", "llama", "llada", "deepseek"], default="auto",
+    p.add_argument("--backend",     choices=["auto", "llama", "llada", "deepseek", "dream"], default="auto",
                    help="Force a specific backend: auto | llama | llada (default: auto)")
 
     # --- inference ---
@@ -144,6 +145,8 @@ def main() -> None:
     from eval_pkg.models import LladaBackend
     if args.backend == "llada":
         backend = LladaBackend(args.model, device=args.device)
+    elif args.backend == "dream":
+        backend = DreamBackend(args.model, device=args.device)
     elif args.backend == "llama":
         backend = LlamaBackend(args.model, device=args.device)
     else:
@@ -173,7 +176,7 @@ def main() -> None:
     safe_model = args.model.replace("/", "_").replace("-", "_")
     output_path = os.path.join(
         args.output_dir,
-        f"results_{safe_model}_{args.mode}_{args.difficulty}_{timestamp}.json"
+        f"results_{safe_model}_{args.problem}_{args.mode}_{args.difficulty}_{timestamp}.json"
     )
 
     save_results(

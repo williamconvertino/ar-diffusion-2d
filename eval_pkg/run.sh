@@ -5,16 +5,17 @@
 # =============================================================================
 
 # ---- Dataset ----------------------------------------------------------------
-PARQUET="./data/NineGrid/ninegrid.parquet"   # path to the .parquet file
-# PARQUET="./data/four_grid.csv"   # path to the .parquet file
-N_SAMPLES=5                                     # how many puzzles to evaluate
-DIFFICULTY="medium"                               # easy | medium | hard | all
+# PARQUET="./data/NineGrid/ninegrid.parquet"   # path to the .parquet file
+PARQUET="./data/four_grid.csv"   # path to the .parquet file
+N_SAMPLES=288                                     # how many puzzles to evaluate
+DIFFICULTY="easy"                               # easy | medium | hard | all
 
 # ---- Model ------------------------------------------------------------------
 MODEL="GSAI-ML/LLaDA-8B-Instruct"      # HuggingFace model name
+# MODEL="Dream-org/Dream-v0-Instruct-7B"
 # MODEL="meta-llama/Meta-Llama-3-8B-Instruct"
 # MODEL="deepseek-ai/deepseek-math-7b-instruct"
-BACKEND="deepseek"         # auto | llama | llada  (auto detects from model name)
+BACKEND="llada"         # auto | llama | llada  | dream  (auto detects from model name)
 DEVICE="auto"          # auto | cuda:0 | cuda:1 | cpu
 
 # ---- Inference --------------------------------------------------------------
@@ -22,12 +23,12 @@ MODE="zero_shot"           # zero_shot | few_shot
 N_FEW_SHOT=3               # number of few-shot examples (ignored for zero_shot)
 MAX_NEW_TOKENS=512         # token budget per puzzle
 PERPLEXITY=false           # true | false  (adds perplexity computation, LLaMA only)
-# PROBLEM="fourgrid"
-PROBLEM="ninegrid"
+PROBLEM="fourgrid"
+# PROBLEM="ninegrid"
 
 # ---- Output -----------------------------------------------------------------
 OUTPUT_DIR="experiments"       # directory where JSON result files are saved
-NOTES="llada med 9grid viz"       # free-text notes stored in the result JSON
+NOTES="dream easy 4grid eval"       # free-text notes stored in the result JSON
 
 # =============================================================================
 #  Don't edit below this line
@@ -70,7 +71,7 @@ python -m "eval_pkg.run_eval" \
     --max-new-tokens "$MAX_NEW_TOKENS" \
     --output-dir     "$OUTPUT_DIR"     \
     --notes          "$NOTES"          \
-    $PERPLEXITY_FLAG
+    $PERPLEXITY_FLAG                    2>&1 | tee "$OUTPUT_DIR/run_${MODEL##*/}_${DIFFICULTY}_${MODE}_${PROBLEM}_output.log"
 
 echo ""
 echo "Done. Results saved to: $OUTPUT_DIR/"

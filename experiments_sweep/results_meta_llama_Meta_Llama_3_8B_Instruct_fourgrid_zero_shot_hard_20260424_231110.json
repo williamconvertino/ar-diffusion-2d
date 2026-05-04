@@ -1,0 +1,2937 @@
+{
+  "timestamp": "20260424_231110",
+  "experiment": {
+    "model": "meta-llama/Meta-Llama-3-8B-Instruct",
+    "inference_mode": "zero_shot",
+    "problem_set": "FourGrid",
+    "n_problems": 288,
+    "difficulty_filter": {
+      "preset": "hard",
+      "missing_cells": [
+        10,
+        12
+      ]
+    },
+    "n_few_shot": 0,
+    "max_new_tokens": 512,
+    "device": "auto",
+    "notes": "4grid eval sweep"
+  },
+  "dataset_difficulty_summary": {
+    "missing_cells": {
+      "min": 11.0,
+      "max": 11.0,
+      "mean": 11.0,
+      "median": 11.0
+    }
+  },
+  "aggregate_metrics": {
+    "exact_match_rate": 0.017361111111111112,
+    "mean_cell_accuracy": 0.4605034722222222,
+    "mean_row_accuracy": 0.16666666666666666,
+    "mean_col_accuracy": 0.1440972222222222,
+    "format_validity_rate": 1.0,
+    "mean_inference_time_s": 16.148432495293996,
+    "mean_perplexity": null
+  },
+  "position_accuracy_map": {
+    "0,0": 0.4583333333333333,
+    "0,1": 0.5069444444444444,
+    "0,2": 0.4895833333333333,
+    "0,3": 0.5173611111111112,
+    "1,0": 0.5138888888888888,
+    "1,1": 0.5,
+    "1,2": 0.4375,
+    "1,3": 0.4479166666666667,
+    "2,0": 0.5243055555555556,
+    "2,1": 0.4513888888888889,
+    "2,2": 0.4479166666666667,
+    "2,3": 0.46875,
+    "3,0": 0.53125,
+    "3,1": 0.3506944444444444,
+    "3,2": 0.3715277777777778,
+    "3,3": 0.3506944444444444
+  },
+  "per_problem": [
+    {
+      "problem_id": "0",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.442579024937004,
+      "perplexity": null
+    },
+    {
+      "problem_id": "3",
+      "exact_match": false,
+      "cell_accuracy": 0.3125,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.189059285447,
+      "perplexity": null
+    },
+    {
+      "problem_id": "6",
+      "exact_match": false,
+      "cell_accuracy": 0.3125,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.188240505754948,
+      "perplexity": null
+    },
+    {
+      "problem_id": "9",
+      "exact_match": false,
+      "cell_accuracy": 0.6875,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18719237111509,
+      "perplexity": null
+    },
+    {
+      "problem_id": "12",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.187375067733228,
+      "perplexity": null
+    },
+    {
+      "problem_id": "15",
+      "exact_match": false,
+      "cell_accuracy": 0.875,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.75,
+      "format_valid": true,
+      "inference_time_s": 16.191945001948625,
+      "perplexity": null
+    },
+    {
+      "problem_id": "18",
+      "exact_match": false,
+      "cell_accuracy": 0.3125,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.185215345118195,
+      "perplexity": null
+    },
+    {
+      "problem_id": "21",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.186250443104655,
+      "perplexity": null
+    },
+    {
+      "problem_id": "24",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.184978469274938,
+      "perplexity": null
+    },
+    {
+      "problem_id": "27",
+      "exact_match": true,
+      "cell_accuracy": 1.0,
+      "row_accuracy": 1.0,
+      "col_accuracy": 1.0,
+      "format_valid": true,
+      "inference_time_s": 16.18770920485258,
+      "perplexity": null
+    },
+    {
+      "problem_id": "30",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.186158712022007,
+      "perplexity": null
+    },
+    {
+      "problem_id": "33",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.185172471683472,
+      "perplexity": null
+    },
+    {
+      "problem_id": "36",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.185961716342717,
+      "perplexity": null
+    },
+    {
+      "problem_id": "39",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.18522496568039,
+      "perplexity": null
+    },
+    {
+      "problem_id": "42",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.18495801696554,
+      "perplexity": null
+    },
+    {
+      "problem_id": "45",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.185640348121524,
+      "perplexity": null
+    },
+    {
+      "problem_id": "48",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.184629968367517,
+      "perplexity": null
+    },
+    {
+      "problem_id": "51",
+      "exact_match": false,
+      "cell_accuracy": 0.75,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.184420980047435,
+      "perplexity": null
+    },
+    {
+      "problem_id": "54",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.185075058136135,
+      "perplexity": null
+    },
+    {
+      "problem_id": "57",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.20506457099691,
+      "perplexity": null
+    },
+    {
+      "problem_id": "60",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.223507271148264,
+      "perplexity": null
+    },
+    {
+      "problem_id": "63",
+      "exact_match": false,
+      "cell_accuracy": 0.75,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.20526060089469,
+      "perplexity": null
+    },
+    {
+      "problem_id": "66",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.22160475421697,
+      "perplexity": null
+    },
+    {
+      "problem_id": "69",
+      "exact_match": false,
+      "cell_accuracy": 0.625,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.22715435968712,
+      "perplexity": null
+    },
+    {
+      "problem_id": "72",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.19479941530153,
+      "perplexity": null
+    },
+    {
+      "problem_id": "75",
+      "exact_match": false,
+      "cell_accuracy": 0.1875,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18254201998934,
+      "perplexity": null
+    },
+    {
+      "problem_id": "78",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.183118354994804,
+      "perplexity": null
+    },
+    {
+      "problem_id": "81",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18348979111761,
+      "perplexity": null
+    },
+    {
+      "problem_id": "84",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18309766286984,
+      "perplexity": null
+    },
+    {
+      "problem_id": "87",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.185970636084676,
+      "perplexity": null
+    },
+    {
+      "problem_id": "90",
+      "exact_match": false,
+      "cell_accuracy": 0.6875,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.18560975883156,
+      "perplexity": null
+    },
+    {
+      "problem_id": "93",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18422744097188,
+      "perplexity": null
+    },
+    {
+      "problem_id": "96",
+      "exact_match": false,
+      "cell_accuracy": 0.75,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.18258293531835,
+      "perplexity": null
+    },
+    {
+      "problem_id": "99",
+      "exact_match": false,
+      "cell_accuracy": 0.1875,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.183227584697306,
+      "perplexity": null
+    },
+    {
+      "problem_id": "102",
+      "exact_match": false,
+      "cell_accuracy": 0.3125,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.182744841091335,
+      "perplexity": null
+    },
+    {
+      "problem_id": "105",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.18371287267655,
+      "perplexity": null
+    },
+    {
+      "problem_id": "108",
+      "exact_match": false,
+      "cell_accuracy": 0.625,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.186790864914656,
+      "perplexity": null
+    },
+    {
+      "problem_id": "111",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.185045562218875,
+      "perplexity": null
+    },
+    {
+      "problem_id": "114",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.184370384085923,
+      "perplexity": null
+    },
+    {
+      "problem_id": "117",
+      "exact_match": false,
+      "cell_accuracy": 0.3125,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18509416701272,
+      "perplexity": null
+    },
+    {
+      "problem_id": "120",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.186232444364578,
+      "perplexity": null
+    },
+    {
+      "problem_id": "123",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.188425182830542,
+      "perplexity": null
+    },
+    {
+      "problem_id": "126",
+      "exact_match": false,
+      "cell_accuracy": 0.75,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.190283928066492,
+      "perplexity": null
+    },
+    {
+      "problem_id": "129",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.188263285905123,
+      "perplexity": null
+    },
+    {
+      "problem_id": "132",
+      "exact_match": false,
+      "cell_accuracy": 0.6875,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.18646386032924,
+      "perplexity": null
+    },
+    {
+      "problem_id": "135",
+      "exact_match": false,
+      "cell_accuracy": 0.9375,
+      "row_accuracy": 0.75,
+      "col_accuracy": 0.75,
+      "format_valid": true,
+      "inference_time_s": 16.186777309980243,
+      "perplexity": null
+    },
+    {
+      "problem_id": "138",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18807233404368,
+      "perplexity": null
+    },
+    {
+      "problem_id": "141",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18753884593025,
+      "perplexity": null
+    },
+    {
+      "problem_id": "144",
+      "exact_match": false,
+      "cell_accuracy": 0.625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.187491139862686,
+      "perplexity": null
+    },
+    {
+      "problem_id": "147",
+      "exact_match": false,
+      "cell_accuracy": 0.625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.187422800809145,
+      "perplexity": null
+    },
+    {
+      "problem_id": "150",
+      "exact_match": true,
+      "cell_accuracy": 1.0,
+      "row_accuracy": 1.0,
+      "col_accuracy": 1.0,
+      "format_valid": true,
+      "inference_time_s": 16.187861998099834,
+      "perplexity": null
+    },
+    {
+      "problem_id": "153",
+      "exact_match": false,
+      "cell_accuracy": 0.625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.186699052806944,
+      "perplexity": null
+    },
+    {
+      "problem_id": "156",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18522237893194,
+      "perplexity": null
+    },
+    {
+      "problem_id": "159",
+      "exact_match": false,
+      "cell_accuracy": 0.3125,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18882333813235,
+      "perplexity": null
+    },
+    {
+      "problem_id": "162",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.187428008764982,
+      "perplexity": null
+    },
+    {
+      "problem_id": "165",
+      "exact_match": false,
+      "cell_accuracy": 0.125,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.188862624578178,
+      "perplexity": null
+    },
+    {
+      "problem_id": "168",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.184954904019833,
+      "perplexity": null
+    },
+    {
+      "problem_id": "171",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.186490850057453,
+      "perplexity": null
+    },
+    {
+      "problem_id": "174",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18730514496565,
+      "perplexity": null
+    },
+    {
+      "problem_id": "177",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.187069959938526,
+      "perplexity": null
+    },
+    {
+      "problem_id": "180",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.1873785299249,
+      "perplexity": null
+    },
+    {
+      "problem_id": "183",
+      "exact_match": false,
+      "cell_accuracy": 0.1875,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18696874100715,
+      "perplexity": null
+    },
+    {
+      "problem_id": "186",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.18635628791526,
+      "perplexity": null
+    },
+    {
+      "problem_id": "189",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.186430583242327,
+      "perplexity": null
+    },
+    {
+      "problem_id": "192",
+      "exact_match": false,
+      "cell_accuracy": 0.875,
+      "row_accuracy": 0.75,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.186266515869647,
+      "perplexity": null
+    },
+    {
+      "problem_id": "195",
+      "exact_match": false,
+      "cell_accuracy": 0.625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 6.056633254978806,
+      "perplexity": null
+    },
+    {
+      "problem_id": "198",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18711056606844,
+      "perplexity": null
+    },
+    {
+      "problem_id": "201",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.184028496034443,
+      "perplexity": null
+    },
+    {
+      "problem_id": "204",
+      "exact_match": false,
+      "cell_accuracy": 0.75,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.183329013641924,
+      "perplexity": null
+    },
+    {
+      "problem_id": "207",
+      "exact_match": false,
+      "cell_accuracy": 0.125,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.1849019061774,
+      "perplexity": null
+    },
+    {
+      "problem_id": "210",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.182903657201678,
+      "perplexity": null
+    },
+    {
+      "problem_id": "213",
+      "exact_match": false,
+      "cell_accuracy": 0.75,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.182459814939648,
+      "perplexity": null
+    },
+    {
+      "problem_id": "216",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.185476430226117,
+      "perplexity": null
+    },
+    {
+      "problem_id": "219",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18610589299351,
+      "perplexity": null
+    },
+    {
+      "problem_id": "222",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.187614728230983,
+      "perplexity": null
+    },
+    {
+      "problem_id": "225",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.188203984871507,
+      "perplexity": null
+    },
+    {
+      "problem_id": "228",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.186775353271514,
+      "perplexity": null
+    },
+    {
+      "problem_id": "231",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18710094690323,
+      "perplexity": null
+    },
+    {
+      "problem_id": "234",
+      "exact_match": false,
+      "cell_accuracy": 0.75,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.186549386009574,
+      "perplexity": null
+    },
+    {
+      "problem_id": "237",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18584402091801,
+      "perplexity": null
+    },
+    {
+      "problem_id": "240",
+      "exact_match": false,
+      "cell_accuracy": 0.625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.186596227809787,
+      "perplexity": null
+    },
+    {
+      "problem_id": "243",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.183559900615364,
+      "perplexity": null
+    },
+    {
+      "problem_id": "246",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18427830794826,
+      "perplexity": null
+    },
+    {
+      "problem_id": "249",
+      "exact_match": false,
+      "cell_accuracy": 0.1875,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.184108476154506,
+      "perplexity": null
+    },
+    {
+      "problem_id": "252",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.183520481921732,
+      "perplexity": null
+    },
+    {
+      "problem_id": "255",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.183710244018584,
+      "perplexity": null
+    },
+    {
+      "problem_id": "258",
+      "exact_match": false,
+      "cell_accuracy": 0.125,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18505419883877,
+      "perplexity": null
+    },
+    {
+      "problem_id": "261",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.185601256322116,
+      "perplexity": null
+    },
+    {
+      "problem_id": "264",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.185541823040694,
+      "perplexity": null
+    },
+    {
+      "problem_id": "267",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.18806776823476,
+      "perplexity": null
+    },
+    {
+      "problem_id": "270",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.18772379308939,
+      "perplexity": null
+    },
+    {
+      "problem_id": "273",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.188173327129334,
+      "perplexity": null
+    },
+    {
+      "problem_id": "276",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.18553446792066,
+      "perplexity": null
+    },
+    {
+      "problem_id": "279",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.188919289037585,
+      "perplexity": null
+    },
+    {
+      "problem_id": "282",
+      "exact_match": false,
+      "cell_accuracy": 0.0,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.187340319156647,
+      "perplexity": null
+    },
+    {
+      "problem_id": "285",
+      "exact_match": false,
+      "cell_accuracy": 0.6875,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.188201955985278,
+      "perplexity": null
+    },
+    {
+      "problem_id": "288",
+      "exact_match": false,
+      "cell_accuracy": 0.3125,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.187671440653503,
+      "perplexity": null
+    },
+    {
+      "problem_id": "291",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.188250008039176,
+      "perplexity": null
+    },
+    {
+      "problem_id": "294",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.187824156600982,
+      "perplexity": null
+    },
+    {
+      "problem_id": "297",
+      "exact_match": false,
+      "cell_accuracy": 0.125,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.187917104922235,
+      "perplexity": null
+    },
+    {
+      "problem_id": "300",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.190109896939248,
+      "perplexity": null
+    },
+    {
+      "problem_id": "303",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.189117217902094,
+      "perplexity": null
+    },
+    {
+      "problem_id": "306",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.1894400739111,
+      "perplexity": null
+    },
+    {
+      "problem_id": "309",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.1882243338041,
+      "perplexity": null
+    },
+    {
+      "problem_id": "312",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.188738694880158,
+      "perplexity": null
+    },
+    {
+      "problem_id": "315",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18674898520112,
+      "perplexity": null
+    },
+    {
+      "problem_id": "318",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.187585264910012,
+      "perplexity": null
+    },
+    {
+      "problem_id": "321",
+      "exact_match": false,
+      "cell_accuracy": 0.625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.1869509909302,
+      "perplexity": null
+    },
+    {
+      "problem_id": "324",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.187143279705197,
+      "perplexity": null
+    },
+    {
+      "problem_id": "327",
+      "exact_match": false,
+      "cell_accuracy": 0.6875,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.187643204815686,
+      "perplexity": null
+    },
+    {
+      "problem_id": "330",
+      "exact_match": false,
+      "cell_accuracy": 0.6875,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.186099420767277,
+      "perplexity": null
+    },
+    {
+      "problem_id": "333",
+      "exact_match": false,
+      "cell_accuracy": 0.875,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.75,
+      "format_valid": true,
+      "inference_time_s": 16.184599462896585,
+      "perplexity": null
+    },
+    {
+      "problem_id": "336",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18526688264683,
+      "perplexity": null
+    },
+    {
+      "problem_id": "339",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.184456828050315,
+      "perplexity": null
+    },
+    {
+      "problem_id": "342",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18441518303007,
+      "perplexity": null
+    },
+    {
+      "problem_id": "345",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.186195915099233,
+      "perplexity": null
+    },
+    {
+      "problem_id": "348",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.1857794621028,
+      "perplexity": null
+    },
+    {
+      "problem_id": "351",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.186094515025616,
+      "perplexity": null
+    },
+    {
+      "problem_id": "354",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.185763083864003,
+      "perplexity": null
+    },
+    {
+      "problem_id": "357",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.186765112914145,
+      "perplexity": null
+    },
+    {
+      "problem_id": "360",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.184948408044875,
+      "perplexity": null
+    },
+    {
+      "problem_id": "363",
+      "exact_match": false,
+      "cell_accuracy": 0.75,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.18526202812791,
+      "perplexity": null
+    },
+    {
+      "problem_id": "366",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.186272227670997,
+      "perplexity": null
+    },
+    {
+      "problem_id": "369",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.18829209730029,
+      "perplexity": null
+    },
+    {
+      "problem_id": "372",
+      "exact_match": false,
+      "cell_accuracy": 0.6875,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.186445330269635,
+      "perplexity": null
+    },
+    {
+      "problem_id": "375",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.19045898783952,
+      "perplexity": null
+    },
+    {
+      "problem_id": "378",
+      "exact_match": false,
+      "cell_accuracy": 0.75,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.189164470881224,
+      "perplexity": null
+    },
+    {
+      "problem_id": "381",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18723088596016,
+      "perplexity": null
+    },
+    {
+      "problem_id": "384",
+      "exact_match": false,
+      "cell_accuracy": 0.1875,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.187264474108815,
+      "perplexity": null
+    },
+    {
+      "problem_id": "387",
+      "exact_match": false,
+      "cell_accuracy": 0.6875,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.191198898945004,
+      "perplexity": null
+    },
+    {
+      "problem_id": "390",
+      "exact_match": false,
+      "cell_accuracy": 0.75,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.19139026477933,
+      "perplexity": null
+    },
+    {
+      "problem_id": "393",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.191509118769318,
+      "perplexity": null
+    },
+    {
+      "problem_id": "396",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.202445297967643,
+      "perplexity": null
+    },
+    {
+      "problem_id": "399",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.194145882036537,
+      "perplexity": null
+    },
+    {
+      "problem_id": "402",
+      "exact_match": true,
+      "cell_accuracy": 1.0,
+      "row_accuracy": 1.0,
+      "col_accuracy": 1.0,
+      "format_valid": true,
+      "inference_time_s": 16.18757328670472,
+      "perplexity": null
+    },
+    {
+      "problem_id": "405",
+      "exact_match": false,
+      "cell_accuracy": 0.625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18985269917175,
+      "perplexity": null
+    },
+    {
+      "problem_id": "408",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.188248061109334,
+      "perplexity": null
+    },
+    {
+      "problem_id": "411",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18756181979552,
+      "perplexity": null
+    },
+    {
+      "problem_id": "414",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.186296259984374,
+      "perplexity": null
+    },
+    {
+      "problem_id": "417",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.187640919350088,
+      "perplexity": null
+    },
+    {
+      "problem_id": "420",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.1886648517102,
+      "perplexity": null
+    },
+    {
+      "problem_id": "423",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.189222662243992,
+      "perplexity": null
+    },
+    {
+      "problem_id": "426",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.189633016940206,
+      "perplexity": null
+    },
+    {
+      "problem_id": "429",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.19131590425968,
+      "perplexity": null
+    },
+    {
+      "problem_id": "432",
+      "exact_match": false,
+      "cell_accuracy": 0.3125,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18999066296965,
+      "perplexity": null
+    },
+    {
+      "problem_id": "435",
+      "exact_match": false,
+      "cell_accuracy": 0.75,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.190591061022133,
+      "perplexity": null
+    },
+    {
+      "problem_id": "438",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.19211568683386,
+      "perplexity": null
+    },
+    {
+      "problem_id": "441",
+      "exact_match": false,
+      "cell_accuracy": 0.0625,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.191931621171534,
+      "perplexity": null
+    },
+    {
+      "problem_id": "444",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.191929499153048,
+      "perplexity": null
+    },
+    {
+      "problem_id": "447",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.192236016970128,
+      "perplexity": null
+    },
+    {
+      "problem_id": "450",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.190710157621652,
+      "perplexity": null
+    },
+    {
+      "problem_id": "453",
+      "exact_match": false,
+      "cell_accuracy": 0.75,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.190495907794684,
+      "perplexity": null
+    },
+    {
+      "problem_id": "456",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.19109082594514,
+      "perplexity": null
+    },
+    {
+      "problem_id": "459",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.19118673307821,
+      "perplexity": null
+    },
+    {
+      "problem_id": "462",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.192700234707445,
+      "perplexity": null
+    },
+    {
+      "problem_id": "465",
+      "exact_match": false,
+      "cell_accuracy": 0.625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.19077579304576,
+      "perplexity": null
+    },
+    {
+      "problem_id": "468",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.189352463930845,
+      "perplexity": null
+    },
+    {
+      "problem_id": "471",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.189881860278547,
+      "perplexity": null
+    },
+    {
+      "problem_id": "474",
+      "exact_match": false,
+      "cell_accuracy": 0.1875,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.189491310156882,
+      "perplexity": null
+    },
+    {
+      "problem_id": "477",
+      "exact_match": false,
+      "cell_accuracy": 0.1875,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.190714412368834,
+      "perplexity": null
+    },
+    {
+      "problem_id": "480",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.189492410048842,
+      "perplexity": null
+    },
+    {
+      "problem_id": "483",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.190051912795752,
+      "perplexity": null
+    },
+    {
+      "problem_id": "486",
+      "exact_match": false,
+      "cell_accuracy": 0.3125,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.188841368071735,
+      "perplexity": null
+    },
+    {
+      "problem_id": "489",
+      "exact_match": false,
+      "cell_accuracy": 0.625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.18682532105595,
+      "perplexity": null
+    },
+    {
+      "problem_id": "492",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.186474583111703,
+      "perplexity": null
+    },
+    {
+      "problem_id": "495",
+      "exact_match": false,
+      "cell_accuracy": 0.3125,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.189254486002028,
+      "perplexity": null
+    },
+    {
+      "problem_id": "498",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.187061281409115,
+      "perplexity": null
+    },
+    {
+      "problem_id": "501",
+      "exact_match": false,
+      "cell_accuracy": 0.3125,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.189409638755023,
+      "perplexity": null
+    },
+    {
+      "problem_id": "504",
+      "exact_match": false,
+      "cell_accuracy": 0.6875,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.1868100669235,
+      "perplexity": null
+    },
+    {
+      "problem_id": "507",
+      "exact_match": false,
+      "cell_accuracy": 0.1875,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.188694129232317,
+      "perplexity": null
+    },
+    {
+      "problem_id": "510",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.187259532045573,
+      "perplexity": null
+    },
+    {
+      "problem_id": "513",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.18791226670146,
+      "perplexity": null
+    },
+    {
+      "problem_id": "516",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.18668154301122,
+      "perplexity": null
+    },
+    {
+      "problem_id": "519",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.185067676007748,
+      "perplexity": null
+    },
+    {
+      "problem_id": "522",
+      "exact_match": true,
+      "cell_accuracy": 1.0,
+      "row_accuracy": 1.0,
+      "col_accuracy": 1.0,
+      "format_valid": true,
+      "inference_time_s": 16.185051589272916,
+      "perplexity": null
+    },
+    {
+      "problem_id": "525",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.182973984163254,
+      "perplexity": null
+    },
+    {
+      "problem_id": "528",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.185332455206662,
+      "perplexity": null
+    },
+    {
+      "problem_id": "531",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.181667810305953,
+      "perplexity": null
+    },
+    {
+      "problem_id": "534",
+      "exact_match": false,
+      "cell_accuracy": 0.1875,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18019904382527,
+      "perplexity": null
+    },
+    {
+      "problem_id": "537",
+      "exact_match": false,
+      "cell_accuracy": 0.75,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.179914981126785,
+      "perplexity": null
+    },
+    {
+      "problem_id": "540",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.179077407345176,
+      "perplexity": null
+    },
+    {
+      "problem_id": "543",
+      "exact_match": false,
+      "cell_accuracy": 0.1875,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.181179718114436,
+      "perplexity": null
+    },
+    {
+      "problem_id": "546",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.180045483633876,
+      "perplexity": null
+    },
+    {
+      "problem_id": "549",
+      "exact_match": false,
+      "cell_accuracy": 0.875,
+      "row_accuracy": 0.75,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.17930100299418,
+      "perplexity": null
+    },
+    {
+      "problem_id": "552",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.180425035767257,
+      "perplexity": null
+    },
+    {
+      "problem_id": "555",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.180871780961752,
+      "perplexity": null
+    },
+    {
+      "problem_id": "558",
+      "exact_match": false,
+      "cell_accuracy": 0.625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.18059714604169,
+      "perplexity": null
+    },
+    {
+      "problem_id": "561",
+      "exact_match": false,
+      "cell_accuracy": 0.6875,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.181682350113988,
+      "perplexity": null
+    },
+    {
+      "problem_id": "564",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.180208334699273,
+      "perplexity": null
+    },
+    {
+      "problem_id": "567",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.181202824227512,
+      "perplexity": null
+    },
+    {
+      "problem_id": "570",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.179491733200848,
+      "perplexity": null
+    },
+    {
+      "problem_id": "573",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.180547724012285,
+      "perplexity": null
+    },
+    {
+      "problem_id": "576",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.178882739972323,
+      "perplexity": null
+    },
+    {
+      "problem_id": "579",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.179171315860003,
+      "perplexity": null
+    },
+    {
+      "problem_id": "582",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.178813110105693,
+      "perplexity": null
+    },
+    {
+      "problem_id": "585",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.180956919211894,
+      "perplexity": null
+    },
+    {
+      "problem_id": "588",
+      "exact_match": false,
+      "cell_accuracy": 0.1875,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.1790185989812,
+      "perplexity": null
+    },
+    {
+      "problem_id": "591",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.1793627650477,
+      "perplexity": null
+    },
+    {
+      "problem_id": "594",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.179427068680525,
+      "perplexity": null
+    },
+    {
+      "problem_id": "597",
+      "exact_match": false,
+      "cell_accuracy": 0.3125,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.179485788103193,
+      "perplexity": null
+    },
+    {
+      "problem_id": "600",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.178843440953642,
+      "perplexity": null
+    },
+    {
+      "problem_id": "603",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.179831401910633,
+      "perplexity": null
+    },
+    {
+      "problem_id": "606",
+      "exact_match": false,
+      "cell_accuracy": 0.75,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.17851219093427,
+      "perplexity": null
+    },
+    {
+      "problem_id": "609",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.17852923506871,
+      "perplexity": null
+    },
+    {
+      "problem_id": "612",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.18033321108669,
+      "perplexity": null
+    },
+    {
+      "problem_id": "615",
+      "exact_match": false,
+      "cell_accuracy": 0.625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.17987093888223,
+      "perplexity": null
+    },
+    {
+      "problem_id": "618",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.18057764787227,
+      "perplexity": null
+    },
+    {
+      "problem_id": "621",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.180955407209694,
+      "perplexity": null
+    },
+    {
+      "problem_id": "624",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.181184851098806,
+      "perplexity": null
+    },
+    {
+      "problem_id": "627",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.180961329024285,
+      "perplexity": null
+    },
+    {
+      "problem_id": "630",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.17949187196791,
+      "perplexity": null
+    },
+    {
+      "problem_id": "633",
+      "exact_match": false,
+      "cell_accuracy": 0.1875,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.179779623169452,
+      "perplexity": null
+    },
+    {
+      "problem_id": "636",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.174990249797702,
+      "perplexity": null
+    },
+    {
+      "problem_id": "639",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.17449613288045,
+      "perplexity": null
+    },
+    {
+      "problem_id": "642",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.17538214707747,
+      "perplexity": null
+    },
+    {
+      "problem_id": "645",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.172234930098057,
+      "perplexity": null
+    },
+    {
+      "problem_id": "648",
+      "exact_match": false,
+      "cell_accuracy": 0.125,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.17192481365055,
+      "perplexity": null
+    },
+    {
+      "problem_id": "651",
+      "exact_match": false,
+      "cell_accuracy": 0.1875,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.172100313939154,
+      "perplexity": null
+    },
+    {
+      "problem_id": "654",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.17293743090704,
+      "perplexity": null
+    },
+    {
+      "problem_id": "657",
+      "exact_match": false,
+      "cell_accuracy": 0.75,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.17271642293781,
+      "perplexity": null
+    },
+    {
+      "problem_id": "660",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.171016974374652,
+      "perplexity": null
+    },
+    {
+      "problem_id": "663",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.17376308562234,
+      "perplexity": null
+    },
+    {
+      "problem_id": "666",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.172927528154105,
+      "perplexity": null
+    },
+    {
+      "problem_id": "669",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.172372261062264,
+      "perplexity": null
+    },
+    {
+      "problem_id": "672",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.171236644964665,
+      "perplexity": null
+    },
+    {
+      "problem_id": "675",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.170740059111267,
+      "perplexity": null
+    },
+    {
+      "problem_id": "678",
+      "exact_match": false,
+      "cell_accuracy": 0.75,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.171707676257938,
+      "perplexity": null
+    },
+    {
+      "problem_id": "681",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.171482104808092,
+      "perplexity": null
+    },
+    {
+      "problem_id": "684",
+      "exact_match": false,
+      "cell_accuracy": 0.3125,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.171545517630875,
+      "perplexity": null
+    },
+    {
+      "problem_id": "687",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.171919969841838,
+      "perplexity": null
+    },
+    {
+      "problem_id": "690",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.172425294760615,
+      "perplexity": null
+    },
+    {
+      "problem_id": "693",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.172353547997773,
+      "perplexity": null
+    },
+    {
+      "problem_id": "696",
+      "exact_match": false,
+      "cell_accuracy": 0.625,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.17282224819064,
+      "perplexity": null
+    },
+    {
+      "problem_id": "699",
+      "exact_match": false,
+      "cell_accuracy": 0.1875,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.171849753707647,
+      "perplexity": null
+    },
+    {
+      "problem_id": "702",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.17025661887601,
+      "perplexity": null
+    },
+    {
+      "problem_id": "705",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.171861369162798,
+      "perplexity": null
+    },
+    {
+      "problem_id": "708",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.17026932584122,
+      "perplexity": null
+    },
+    {
+      "problem_id": "711",
+      "exact_match": false,
+      "cell_accuracy": 0.875,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.75,
+      "format_valid": true,
+      "inference_time_s": 16.172477648127824,
+      "perplexity": null
+    },
+    {
+      "problem_id": "714",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.171340864151716,
+      "perplexity": null
+    },
+    {
+      "problem_id": "717",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.17127508064732,
+      "perplexity": null
+    },
+    {
+      "problem_id": "720",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.17120911506936,
+      "perplexity": null
+    },
+    {
+      "problem_id": "723",
+      "exact_match": false,
+      "cell_accuracy": 0.6875,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.1724195596762,
+      "perplexity": null
+    },
+    {
+      "problem_id": "726",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.171214448288083,
+      "perplexity": null
+    },
+    {
+      "problem_id": "729",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.172551491763443,
+      "perplexity": null
+    },
+    {
+      "problem_id": "732",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.17124212998897,
+      "perplexity": null
+    },
+    {
+      "problem_id": "735",
+      "exact_match": false,
+      "cell_accuracy": 0.8125,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.171319987159222,
+      "perplexity": null
+    },
+    {
+      "problem_id": "738",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.171794658061117,
+      "perplexity": null
+    },
+    {
+      "problem_id": "741",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.171503548976034,
+      "perplexity": null
+    },
+    {
+      "problem_id": "744",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.17242381768301,
+      "perplexity": null
+    },
+    {
+      "problem_id": "747",
+      "exact_match": false,
+      "cell_accuracy": 0.625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.171998037956655,
+      "perplexity": null
+    },
+    {
+      "problem_id": "750",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.17300293687731,
+      "perplexity": null
+    },
+    {
+      "problem_id": "753",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.171772691886872,
+      "perplexity": null
+    },
+    {
+      "problem_id": "756",
+      "exact_match": false,
+      "cell_accuracy": 0.3125,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.17259472189471,
+      "perplexity": null
+    },
+    {
+      "problem_id": "759",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.17105467664078,
+      "perplexity": null
+    },
+    {
+      "problem_id": "762",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.172399410046637,
+      "perplexity": null
+    },
+    {
+      "problem_id": "765",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.171655094716698,
+      "perplexity": null
+    },
+    {
+      "problem_id": "768",
+      "exact_match": false,
+      "cell_accuracy": 0.75,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.170912724919617,
+      "perplexity": null
+    },
+    {
+      "problem_id": "771",
+      "exact_match": false,
+      "cell_accuracy": 0.75,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.171350512187928,
+      "perplexity": null
+    },
+    {
+      "problem_id": "774",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.171703945845366,
+      "perplexity": null
+    },
+    {
+      "problem_id": "777",
+      "exact_match": false,
+      "cell_accuracy": 0.9375,
+      "row_accuracy": 0.75,
+      "col_accuracy": 0.75,
+      "format_valid": true,
+      "inference_time_s": 16.172300121746957,
+      "perplexity": null
+    },
+    {
+      "problem_id": "780",
+      "exact_match": false,
+      "cell_accuracy": 0.5,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.171609682030976,
+      "perplexity": null
+    },
+    {
+      "problem_id": "783",
+      "exact_match": false,
+      "cell_accuracy": 0.75,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.169252603314817,
+      "perplexity": null
+    },
+    {
+      "problem_id": "786",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.16882515605539,
+      "perplexity": null
+    },
+    {
+      "problem_id": "789",
+      "exact_match": true,
+      "cell_accuracy": 1.0,
+      "row_accuracy": 1.0,
+      "col_accuracy": 1.0,
+      "format_valid": true,
+      "inference_time_s": 16.17138428008184,
+      "perplexity": null
+    },
+    {
+      "problem_id": "792",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.168120593763888,
+      "perplexity": null
+    },
+    {
+      "problem_id": "795",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.16982314037159,
+      "perplexity": null
+    },
+    {
+      "problem_id": "798",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.16902275197208,
+      "perplexity": null
+    },
+    {
+      "problem_id": "801",
+      "exact_match": false,
+      "cell_accuracy": 0.75,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.170993102248758,
+      "perplexity": null
+    },
+    {
+      "problem_id": "804",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.171038802713156,
+      "perplexity": null
+    },
+    {
+      "problem_id": "807",
+      "exact_match": false,
+      "cell_accuracy": 0.75,
+      "row_accuracy": 0.5,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.171211031731218,
+      "perplexity": null
+    },
+    {
+      "problem_id": "810",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.169127784203738,
+      "perplexity": null
+    },
+    {
+      "problem_id": "813",
+      "exact_match": false,
+      "cell_accuracy": 0.125,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.169745091348886,
+      "perplexity": null
+    },
+    {
+      "problem_id": "816",
+      "exact_match": false,
+      "cell_accuracy": 0.875,
+      "row_accuracy": 0.75,
+      "col_accuracy": 0.5,
+      "format_valid": true,
+      "inference_time_s": 16.168744020164013,
+      "perplexity": null
+    },
+    {
+      "problem_id": "819",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.17085418011993,
+      "perplexity": null
+    },
+    {
+      "problem_id": "822",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.169673449825495,
+      "perplexity": null
+    },
+    {
+      "problem_id": "825",
+      "exact_match": false,
+      "cell_accuracy": 0.125,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.171032015234232,
+      "perplexity": null
+    },
+    {
+      "problem_id": "828",
+      "exact_match": false,
+      "cell_accuracy": 0.1875,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.17230090778321,
+      "perplexity": null
+    },
+    {
+      "problem_id": "831",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.173143185209483,
+      "perplexity": null
+    },
+    {
+      "problem_id": "834",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.171728020068258,
+      "perplexity": null
+    },
+    {
+      "problem_id": "837",
+      "exact_match": false,
+      "cell_accuracy": 0.625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.172387128695846,
+      "perplexity": null
+    },
+    {
+      "problem_id": "840",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.17040602583438,
+      "perplexity": null
+    },
+    {
+      "problem_id": "843",
+      "exact_match": false,
+      "cell_accuracy": 0.5625,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.170052517671138,
+      "perplexity": null
+    },
+    {
+      "problem_id": "846",
+      "exact_match": false,
+      "cell_accuracy": 0.4375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.17069812491536,
+      "perplexity": null
+    },
+    {
+      "problem_id": "849",
+      "exact_match": false,
+      "cell_accuracy": 0.25,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.169777212198824,
+      "perplexity": null
+    },
+    {
+      "problem_id": "852",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.16986799193546,
+      "perplexity": null
+    },
+    {
+      "problem_id": "855",
+      "exact_match": false,
+      "cell_accuracy": 0.3125,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.0,
+      "format_valid": true,
+      "inference_time_s": 16.16789468517527,
+      "perplexity": null
+    },
+    {
+      "problem_id": "858",
+      "exact_match": false,
+      "cell_accuracy": 0.375,
+      "row_accuracy": 0.0,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.17069797916338,
+      "perplexity": null
+    },
+    {
+      "problem_id": "861",
+      "exact_match": false,
+      "cell_accuracy": 0.625,
+      "row_accuracy": 0.25,
+      "col_accuracy": 0.25,
+      "format_valid": true,
+      "inference_time_s": 16.171806693077087,
+      "perplexity": null
+    }
+  ]
+}

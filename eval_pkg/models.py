@@ -269,7 +269,8 @@ class LladaBackend(_BaseModelBackend):
 
         return x
 
-    def generate(self, prompt: str, max_new_tokens: int = 512, **kwargs) -> str:
+    # This is the older generate method, consider it as bloat for now
+    def _bloat_generate(self, prompt: str, max_new_tokens: int = 512, **kwargs) -> str:
         import torch
 
         encoded_prompt = self._tokenizer(prompt, return_tensors="pt")
@@ -292,7 +293,7 @@ class LladaBackend(_BaseModelBackend):
                 self._model,
                 input_ids,
                 gen_length=max_new_tokens,
-                steps=kwargs.pop("steps", 64),
+                steps=kwargs.pop("steps", 512),
                 temperature=kwargs.pop("temperature", 0.0),
                 **kwargs,
             )
@@ -300,8 +301,105 @@ class LladaBackend(_BaseModelBackend):
         new_tokens = out[0][inputs["input_ids"].shape[-1]:]
         return self._tokenizer.decode(new_tokens, skip_special_tokens=True)
 
+    def generate(self, prompt: str, max_new_tokens: int = 512, **kwargs) -> str:
+        import torch
+
+        if getattr(self._tokenizer, "padding_side", None) != "left":
+            self._tokenizer.padding_side = "left"
+
+        if self._tokenizer.pad_token_id == 126336:
+            raise ValueError(
+                "LLaDA generate assumes pad_token_id != mask_id (126336). "
+                "The current tokenizer configuration violates this."
+            )
+
+        if hasattr(self._tokenizer, "apply_chat_template"):
+            message = [{"role": "user", "content": prompt}]
+            prompt_text = self._tokenizer.apply_chat_template(
+                message,
+                add_generation_prompt=True,
+                tokenize=False,
+            )
+            encoded_prompt = self._tokenizer(
+                prompt_text,
+                add_special_tokens=False,
+                return_tensors="pt",
+            )
+        else:
+            encoded_prompt = self._tokenizer(prompt, return_tensors="pt")
+
+        input_ids = encoded_prompt["input_ids"].to(self._model.device)
+        attention_mask = encoded_prompt.get("attention_mask")
+        if attention_mask is not None:
+            attention_mask = attention_mask.to(self._model.device)
+
+        out = self._generate(
+            self._model,
+            input_ids,
+            attention_mask=attention_mask,
+            gen_length=max_new_tokens,
+            steps=kwargs.pop("steps", 128),
+            block_length=kwargs.pop("block_length", max_new_tokens),
+            temperature=kwargs.pop("temperature", 0.0),
+            cfg_scale=kwargs.pop("cfg_scale", 0.0),
+            remasking=kwargs.pop("remasking", "low_confidence"),
+            mask_id=kwargs.pop("mask_id", 126336),
+            logits_eos_inf=kwargs.pop("logits_eos_inf", False),
+            confidence_eos_eot_inf=kwargs.pop("confidence_eos_eot_inf", False),
+            viz_path=kwargs.pop("viz_path", None),
+            **kwargs,
+        )
+
+        new_tokens = out[:, input_ids.shape[1]:]
+        text = self._tokenizer.batch_decode(new_tokens, skip_special_tokens=True)[0]
+        return text.strip()
+
     def log_prob(self, prompt: str, completion: str) -> float | None:
         return None
+
+class DreamBackend(LladaBackend):
+    def generate(self, prompt: str, max_new_tokens: int = 512, **kwargs) -> str:
+        import torch
+
+        if hasattr(self._tokenizer, "apply_chat_template"):
+            messages = [{"role": "user", "content": prompt}]
+            inputs = self._tokenizer.apply_chat_template(
+                messages,
+                return_tensors="pt",
+                return_dict=True,
+                add_generation_prompt=True,
+            )
+        else:
+            inputs = self._tokenizer(prompt, return_tensors="pt")
+
+        input_ids = inputs["input_ids"].to(self._model.device)
+        attention_mask = inputs.get("attention_mask")
+        if attention_mask is not None:
+            attention_mask = attention_mask.to(self._model.device)
+
+        with torch.no_grad():
+            output = self._model.diffusion_generate(
+                input_ids,
+                attention_mask=attention_mask,
+                max_new_tokens=max_new_tokens,
+                output_history=kwargs.pop("output_history", False),
+                return_dict_in_generate=kwargs.pop("return_dict_in_generate", True),
+                steps=kwargs.pop("steps", 128),
+                temperature=kwargs.pop("temperature", 0.2),
+                top_p=kwargs.pop("top_p", 0.95),
+                alg=kwargs.pop("alg", "entropy"),
+                alg_temp=kwargs.pop("alg_temp", 0.0),
+                **kwargs,
+            )
+
+        generated_ids = output.sequences[0][input_ids.shape[-1]:]
+        text = self._tokenizer.decode(generated_ids.tolist(), skip_special_tokens=False)
+
+        eos_token = self._tokenizer.eos_token
+        if eos_token:
+            text = text.split(eos_token)[0]
+
+        return text.strip()
 
 class DeepSeekBackend(_BaseModelBackend):
     """
@@ -392,8 +490,11 @@ def build_backend(
     kw = model_kwargs or {}
     _llada_hints = ("llada", "mdlm", "diffusion", "gsai-ml", "gsai_ml")
     _deepseek_hints = ("deepseek-math", "deepseek_math")
+    _dream_hints = ("dream","dream-org", "dream-v0")
     if any(h in name_lower for h in _llada_hints):
         return LladaBackend(model, device=device, **kw)
+    if any(h in name_lower for h in _dream_hints):
+        return DreamBackend(model, device=device, **kw)
     if any(h in name_lower for h in _deepseek_hints):
         return DeepSeekBackend(model, device=device, **kw)
     return LlamaBackend(model, device=device, **kw)

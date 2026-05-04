@@ -122,11 +122,13 @@ class NineGrid:
         "initial_resolution_rate",
     ]
 
+    FILTER_CLS = DifficultyFilter
+
     def __init__(
         self,
         parquet_path: str,
         n_samples: int | None = None,
-        difficulty: DifficultyFilter | None = None,
+        difficulty: FILTER_CLS | None = None,
         few_shot_strategy: str = "easiest",
         seed: int = 42,
     ):
@@ -159,7 +161,7 @@ class NineGrid:
 
     # ---- inspection helpers -------------------------------------------------
 
-    def filter(self, difficulty: DifficultyFilter) -> "NineGrid":
+    def filter(self, difficulty: FILTER_CLS) -> "NineGrid":
         """Return a new NineGrid with only problems matching the filter."""
         filtered = [p for p in self._problems if difficulty.matches(p.metadata)]
         clone = object.__new__(NineGrid)
@@ -188,7 +190,7 @@ class NineGrid:
         """How many problems fall into each preset difficulty tier."""
         counts = {}
         for d in Difficulty:
-            f = DifficultyFilter.from_preset(d)
+            f = FILTER_CLS.from_preset(d)
             counts[d.value] = sum(1 for p in self._problems if f.matches(p.metadata))
         counts["total"] = len(self._problems)
         return counts
@@ -214,7 +216,7 @@ class NineGrid:
         self,
         path: str,
         n_samples: int | None,
-        difficulty: DifficultyFilter | None,
+        difficulty: FILTER_CLS | None,
     ) -> list[Problem]:
         import ast
         try:
@@ -267,41 +269,43 @@ class NineGrid:
 
 class FourGridDifficultyFilter(DifficultyFilter):
     _PRESETS: dict[Difficulty, dict] = {
-        Difficulty.EASY:   {"difficulty": 'easy', "missing_cells": (4, 7)    },
-        Difficulty.MEDIUM: {"difficuly": 'medium', "missing_cells": (7, 9)   },
-        Difficulty.HARD:   {"difficuly": 'hard', "missing_cells": (10, 12)     },
+        Difficulty.EASY:   {"difficulty": "easy",   "missing_cells": (4, 7)},
+        Difficulty.MEDIUM: {"difficulty": "medium", "missing_cells": (7, 9)},
+        Difficulty.HARD:   {"difficulty": "hard",   "missing_cells": (10, 12)},
     }
 
     def __init__(
-        self,
-        missing_cells: tuple[int, int] | None = None,
-        given_ratio: tuple[float, float] | None = None,
-        naked_singles_count: tuple[int, int] | None = None,
-        hidden_singles_count: tuple[int, int] | None = None,
-        initial_resolution_rate: tuple[float, float] | None = None,
-        difficulty: str | None = None,
-        preset: Difficulty | None = None,
-    ):
+            self,
+            missing_cells: tuple[int, int] | None = None,
+            given_ratio: tuple[float, float] | None = None,
+            naked_singles_count: tuple[int, int] | None = None,
+            hidden_singles_count: tuple[int, int] | None = None,
+            initial_resolution_rate: tuple[float, float] | None = None,
+            difficulty: str | None = None,
+            preset: Difficulty | None = None,
+        ):
         if preset is not None:
             p = self._PRESETS[preset]
-            difficulty               = difficulty            or p.get("difficulty")
-            missing_cells            = missing_cells         or p.get("missing_cells")
+            difficulty = difficulty or p.get("difficulty")
+            missing_cells = missing_cells or p.get("missing_cells")
 
-        self.difficulty              = difficulty  
-        self.missing_cells           = missing_cells
-        self.given_ratio             = given_ratio
-        self.naked_singles_count     = naked_singles_count
-        self.hidden_singles_count    = hidden_singles_count
+        self.difficulty = difficulty
+        self.missing_cells = missing_cells
+        self.given_ratio = given_ratio
+        self.naked_singles_count = naked_singles_count
+        self.hidden_singles_count = hidden_singles_count
         self.initial_resolution_rate = initial_resolution_rate
-        self.preset                  = preset
-    
+        self.preset = preset
+
     def matches(self, meta: dict) -> bool:
+        if self.difficulty is not None and meta.get("difficulty") != self.difficulty:
+            return False
+
         checks = [
-            ("difficulty",              self.difficulty),
-            ("missing_cells",           self.missing_cells),
-            ("given_ratio",             self.given_ratio),
-            ("naked_singles_count",     self.naked_singles_count),
-            ("hidden_singles_count",    self.hidden_singles_count),
+            ("missing_cells", self.missing_cells),
+            ("given_ratio", self.given_ratio),
+            ("naked_singles_count", self.naked_singles_count),
+            ("hidden_singles_count", self.hidden_singles_count),
             ("initial_resolution_rate", self.initial_resolution_rate),
         ]
         for key, rng in checks:
@@ -313,18 +317,18 @@ class FourGridDifficultyFilter(DifficultyFilter):
 
     def __repr__(self) -> str:
         if self.preset:
-            return f"DifficultyFilter(preset={self.preset.value!r})"
+            return f"FourGridDifficultyFilter(preset={self.preset.value!r})"
         parts = []
         for attr in ["difficulty", "missing_cells", "given_ratio", "naked_singles_count",
                      "hidden_singles_count", "initial_resolution_rate"]:
             v = getattr(self, attr)
             if v is not None:
                 parts.append(f"{attr}={v}")
-        return f"DifficultyFilter({', '.join(parts)})"
+        return f"FourGridDifficultyFilter({', '.join(parts)})"
+
 
 class FourGrid(NineGrid):
-
-    name="FourGrid"
+    name = "FourGrid"
     _META_COLS = [
         "board_id",
         "root_hash",
@@ -333,3 +337,12 @@ class FourGrid(NineGrid):
         "difficulty",
         "missing_cells",
     ]
+    FILTER_CLS = FourGridDifficultyFilter
+
+    def count_by_difficulty(self) -> dict[str, int]:
+        counts = {}
+        for d in Difficulty:
+            f = FourGridDifficultyFilter.from_preset(d)
+            counts[d.value] = sum(1 for p in self._problems if f.matches(p.metadata))
+        counts["total"] = len(self._problems)
+        return counts
